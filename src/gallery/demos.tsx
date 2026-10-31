@@ -489,7 +489,7 @@ export function App() {
   // ?view=card — компонент во всё окно (проверка адаптива и скриншоты для README)
   if (q.get("view") === "card") return <div style={{ minHeight: "100vh", background: "#f4f2f8" }}><CardTransition heading={PLACES[lang].title} places={PLACES[lang].places} labels={PLACES[lang].labels} /></div>;
   if (q.get("rec") === "island") return <div style={{ zoom: Number(q.get("z") ?? 1) }}><IslandPhone text={ISLAND[lang]} /></div>;
-  const repo = "https://github.com/ArthurKrantsevich/neuropilot-components/tree/main/src/components/";
+  const repo = "https://arthurkrantsevich.github.io/neuropilot/#";
   return (
     <div className="page">
       <header className="top">

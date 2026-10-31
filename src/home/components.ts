@@ -1,5 +1,5 @@
-// Компоненты, сделанные для роликов канала (живут в neuropilot-components). Пока карточка ведёт на демо там.
-export const DEMO_BASE = "https://arthurkrantsevich.github.io/neuropilot-components/";
+// Компоненты, сделанные для роликов канала (старый вариант главной-меню). Карточка ведёт на компонент на этом сайте.
+export const DEMO_BASE = "https://arthurkrantsevich.github.io/neuropilot/";
 
 export type Item = { id: string; title: string; about: string };
 export const ITEMS: Item[] = [

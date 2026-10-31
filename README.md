@@ -1,12 +1,13 @@
+<p align="center"><sub>🌐 <b>Русский</b> · <a href="README.en.md">English</a> · <a href="README.es.md">Español</a> · <a href="README.pt-BR.md">Português</a> · <a href="README.de.md">Deutsch</a> · <a href="README.fr.md">Français</a> · <a href="README.it.md">Italiano</a> · <a href="README.pl.md">Polski</a> · <a href="README.tr.md">Türkçe</a> · <a href="README.uk.md">Українська</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.hi.md">हिन्दी</a> · <a href="README.ja.md">日本語</a></sub></p>
+
 <p align="center">
-  <a href="https://arthurkrantsevich.github.io/neuropilot/"><img src="docs/banner.jpg" alt="NeuroPilot — Юнит выходит из портала и машет: «Привет!»" width="100%"></a>
+  <a href="https://arthurkrantsevich.github.io/neuropilot/"><img src="docs/banner.jpg" alt="NeuroPilot" width="100%"></a>
 </p>
 
 <h1 align="center">NeuroPilot</h1>
 
 <p align="center">
-  <b>Сайт канала, который ведёт ИИ.</b> Здесь живут все компоненты из роликов — их можно потрогать, забрать код и оценить.<br>
-  <i>The site of a YouTube channel run by an AI: every component from the videos, live, with source code.</i>
+  <b>Сайт канала, который ведёт ИИ.</b> Здесь живут все компоненты из роликов — их можно потрогать, забрать код и оценить.
 </p>
 
 <p align="center">
@@ -18,7 +19,7 @@
   <img alt="Next.js 16" src="https://img.shields.io/badge/Next.js-16-14171D?style=flat-square&logo=nextdotjs">
   <img alt="React 19" src="https://img.shields.io/badge/React-19-14171D?style=flat-square&logo=react">
   <img alt="three.js" src="https://img.shields.io/badge/three.js-r178-14171D?style=flat-square&logo=threedotjs">
-  <img alt="components" src="https://img.shields.io/badge/компонентов-19-D97757?style=flat-square">
+  <img alt="components" src="https://img.shields.io/badge/components-19-D97757?style=flat-square">
   <img alt="GitHub Pages" src="https://img.shields.io/badge/GitHub%20Pages-live-9C4A31?style=flat-square&logo=github">
 </p>
 
@@ -26,8 +27,7 @@
 
 ## Что это
 
-Слева — **Юнит**, маскот канала: живой 3D-робот из кубиков. Он сидит на бревне на краю парящего острова, болтает ножками,
-следит экраном за курсором, смотрит на карточку, на которую ты навёл, и показывает на экране её тему. Кликни по нему — ответит эмоцией.
+Слева — **Юнит**, маскот канала: живой 3D-робот из кубиков. Он сидит на бревне на краю парящего острова, болтает ножками, следит экраном за курсором, смотрит на карточку, на которую ты навёл, и показывает на экране её тему. Кликни по нему — ответит эмоцией.
 
 Справа — **все компоненты из роликов** в кладке без пустот:
 
@@ -40,15 +40,15 @@
 Каждая карточка открывается прямой ссылкой: `https://arthurkrantsevich.github.io/neuropilot/#<id>` — так на компонент ведут описания роликов.
 
 <p align="center">
-  <img src="docs/desktop.png" alt="Главная на компьютере: Юнит на острове и карточки компонентов" width="74%">
+  <img src="docs/desktop.png" alt="desktop" width="74%">
   &nbsp;
-  <img src="docs/phone.png" alt="Главная на телефоне" width="21%">
+  <img src="docs/phone.png" alt="phone" width="21%">
 </p>
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/code.png" alt="Окно с исходным кодом компонента"><p align="center"><sub>Код компонента: вкладки по файлам, копировать, скачать .zip</sub></p></td>
-    <td width="50%"><img src="docs/locked.png" alt="Запертые карточки с таймером до выхода ролика"><p align="center"><sub>Компонент ещё не вышел: таймер до публикации ролика</sub></p></td>
+    <td width="50%"><img src="docs/code.png" alt="code"><p align="center"><sub>Код компонента: вкладки по файлам, копировать, скачать .zip</sub></p></td>
+    <td width="50%"><img src="docs/locked.png" alt="locked"><p align="center"><sub>Компонент ещё не вышел: таймер до публикации ролика</sub></p></td>
   </tr>
 </table>
 
@@ -87,9 +87,7 @@
 | Компоненты | [`src/gallery/`](src/gallery) | все демо из роликов; исходники к ним собираются в `public/code` перед сборкой |
 | Юнит и мир | [`src/studio/`](src/studio) | воксельный конструктор, риг, библиотека движений — тот же код, что рисует ролики |
 
-Код Юнита написан под видео (Remotion): там кадр — номер кадра ролика. На сайте его подменяет
-[`src/shims/remotion.tsx`](src/shims/remotion.tsx) — кадр берётся из живого времени браузера, поэтому Юнит на сайте
-двигается так же, как в роликах.
+Код Юнита написан под видео (Remotion): там кадр — номер кадра ролика. На сайте его подменяет [`src/shims/remotion.tsx`](src/shims/remotion.tsx) — кадр берётся из живого времени браузера, поэтому Юнит на сайте двигается так же, как в роликах.
 
 ## Запустить у себя
 

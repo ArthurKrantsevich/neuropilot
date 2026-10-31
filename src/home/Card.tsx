@@ -52,6 +52,10 @@ export const Card: React.FC<{
   children: ReactNode;
 }> = ({ n, id, title, about, open, onToggle, onHover, onCode, counts, vote, onVoted, wide, children }) => {
   const [busy, setBusy] = useState(false);
+  const [mounted, setMounted] = useState(open);
+  useEffect(() => {
+    if (open) setMounted(true);
+  }, [open]);
   const cast = async (v: 1 | -1) => {
     if (busy) return;
     const next: Vote = vote === v ? 0 : v; // повторный клик снимает голос
@@ -78,11 +82,19 @@ export const Card: React.FC<{
         </span>
         <span style={{ fontFamily: "var(--pixel)", fontSize: 22, color: INK, transform: open ? "rotate(180deg)" : "none", transition: "transform 160ms", textAlign: "center" }}>▾</span>
       </button>
-      {open && (
-        <div className="np-demo" style={{ display: "grid", placeItems: "center", padding: 18, background: "#FBF9F6", minWidth: 0, overflow: "hidden" }}>
-          {children}
+      {/* плавное раскрытие: строка сетки 0fr → 1fr; демо монтируется при первом открытии и дальше живёт */}
+      <div style={{ display: "grid", gridTemplateRows: open ? "1fr" : "0fr", transition: "grid-template-rows 420ms cubic-bezier(.2,.8,.2,1)" }}>
+        <div style={{ overflow: "hidden", minHeight: 0 }}>
+          {mounted && (
+            <div
+              className="np-demo"
+              style={{ display: "grid", placeItems: "center", padding: 18, background: "#FBF9F6", minWidth: 0, opacity: open ? 1 : 0, transition: "opacity 300ms ease" }}
+            >
+              {children}
+            </div>
+          )}
         </div>
-      )}
+      </div>
       <footer style={{ display: "flex", flexWrap: "nowrap", gap: 8, padding: "10px 14px 14px", borderTop: open ? `4px solid ${INK}` : `3px dashed #CFC6BA`, alignItems: "center" }}>
         {!open && <Btn onClick={onToggle}>▸ Открыть</Btn>}
         <Btn onClick={onCode} title="Посмотреть код">{"</>"}{open ? " Код" : ""}</Btn>

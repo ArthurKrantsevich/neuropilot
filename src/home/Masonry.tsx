@@ -1,21 +1,32 @@
 "use client";
-// Кладка без пустот: карточки идут по порядку, каждая — в ту колонку, что сейчас короче.
-// Широкая (развёрнутая) карточка встаёт на всю ширину и делит ленту на участки; в каждом участке колонки выравниваются заново.
-// Высоты меряем вживую (ResizeObserver): раскрыл/свернул карточку — раскладка пересчиталась.
+// Кладка без пустот: карточки по порядку, каждая — в самую короткую колонку; развёрнутая широкая встаёт на всю ширину,
+// под ней колонки выравниваются заново. Все карточки живут в одном контейнере и стоят абсолютно —
+// при раскрытии ничего не пересоздаётся, а места меняются плавно (transform и width с переходом).
 import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
 export type Brick = { key: string; full: boolean; node: ReactNode };
+const EASE = "cubic-bezier(.2,.8,.2,1)";
+const MS = 420;
 
 export const Masonry: React.FC<{ items: Brick[]; columns: number; gap: number }> = ({ items, columns, gap }) => {
-  const heights = useRef(new Map<string, number>());
-  const [, bump] = useState(0);
+  const box = useRef<HTMLDivElement>(null);
   const els = useRef(new Map<string, HTMLDivElement>());
+  const heights = useRef(new Map<string, number>());
+  const [width, setWidth] = useState(0);
+  const [, bump] = useState(0);
+  const [ready, setReady] = useState(false); // первый расчёт — без анимации
+
   useLayoutEffect(() => {
     const ro = new ResizeObserver((entries) => {
       let changed = false;
       for (const e of entries) {
-        const k = (e.target as HTMLElement).dataset.k!;
-        const h = Math.round(e.contentRect.height);
+        const el = e.target as HTMLElement;
+        if (el === box.current) {
+          setWidth(Math.round(e.contentRect.width));
+          continue;
+        }
+        const k = el.dataset.k!;
+        const h = Math.round(el.getBoundingClientRect().height);
         if (heights.current.get(k) !== h) {
           heights.current.set(k, h);
           changed = true;
@@ -23,52 +34,54 @@ export const Masonry: React.FC<{ items: Brick[]; columns: number; gap: number }>
       }
       if (changed) bump((x) => x + 1);
     });
+    if (box.current) ro.observe(box.current);
     els.current.forEach((el) => ro.observe(el));
     return () => ro.disconnect();
-  }, [items, columns]);
+  }, [items.length]);
+  useLayoutEffect(() => {
+    if (!ready && width > 0 && heights.current.size === items.length) requestAnimationFrame(() => setReady(true));
+  });
 
-  // участки: подряд идущие обычные карточки → колонки; широкая — отдельной строкой
-  const segments: (Brick[] | Brick)[] = [];
+  const colW = columns > 1 ? (width - gap * (columns - 1)) / columns : width;
+  const fill = new Array(columns).fill(0);
+  const pos = new Map<string, { x: number; y: number; w: number }>();
   for (const it of items) {
-    if (it.full && columns > 1) segments.push(it);
-    else {
-      const last = segments[segments.length - 1];
-      if (Array.isArray(last)) last.push(it);
-      else segments.push([it]);
+    const h = heights.current.get(it.key) ?? 300;
+    if (it.full && columns > 1) {
+      const y = Math.max(...fill);
+      pos.set(it.key, { x: 0, y, w: width });
+      fill.fill(y + h + gap);
+    } else {
+      const c = fill.indexOf(Math.min(...fill)); // самая короткая колонка
+      pos.set(it.key, { x: c * (colW + gap), y: fill[c], w: colW });
+      fill[c] += h + gap;
     }
   }
-  const ref = (k: string) => (el: HTMLDivElement | null) => {
-    if (el) els.current.set(k, el);
-    else els.current.delete(k);
-  };
+  const total = Math.max(0, Math.max(...fill) - gap);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap }}>
-      {segments.map((seg, si) => {
-        if (!Array.isArray(seg))
-          return (
-            <div key={seg.key} data-k={seg.key} ref={ref(seg.key)}>
-              {seg.node}
-            </div>
-          );
-        const cols: Brick[][] = Array.from({ length: columns }, () => []);
-        const fill = new Array(columns).fill(0);
-        for (const it of seg) {
-          const c = fill.indexOf(Math.min(...fill)); // самая короткая колонка
-          cols[c].push(it);
-          fill[c] += (heights.current.get(it.key) ?? 300) + gap;
-        }
+    <div ref={box} style={{ position: "relative", height: total, transition: ready ? `height ${MS}ms ${EASE}` : undefined }}>
+      {items.map((it) => {
+        const p = pos.get(it.key)!;
         return (
-          <div key={`seg${si}`} style={{ display: "grid", gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, gap, alignItems: "start" }}>
-            {cols.map((col, ci) => (
-              <div key={ci} style={{ display: "flex", flexDirection: "column", gap, minWidth: 0 }}>
-                {col.map((it) => (
-                  <div key={it.key} data-k={it.key} ref={ref(it.key)}>
-                    {it.node}
-                  </div>
-                ))}
-              </div>
-            ))}
+          <div
+            key={it.key}
+            data-k={it.key}
+            ref={(el) => {
+              if (el) els.current.set(it.key, el);
+              else els.current.delete(it.key);
+            }}
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              width: p.w || "100%",
+              transform: `translate(${p.x}px, ${p.y}px)`,
+              transition: ready ? `transform ${MS}ms ${EASE}, width ${MS}ms ${EASE}` : undefined,
+              opacity: width ? 1 : 0,
+            }}
+          >
+            {it.node}
           </div>
         );
       })}

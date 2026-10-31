@@ -1,0 +1,147 @@
+"use client";
+// Карточка компонента в стиле канала: свёрнута — номер, название, короткое описание; развёрнута — живое демо.
+// Снизу: «Код» (окно с файлами), «Скачать .zip», общие лайки «нравится / не нравится».
+import { useEffect, useState, type ReactNode } from "react";
+import { sendVote, type Counts, type Vote } from "./likes";
+
+const INK = "#14171D";
+const CREAM = "#F4F0EA";
+const RUST = "#9C4A31";
+const ORANGE = "#D97757";
+
+export const Btn: React.FC<{ onClick?: () => void; href?: string; download?: string; on?: boolean; children: ReactNode; title?: string }> = ({ onClick, href, download, on, children, title }) => {
+  const style: React.CSSProperties = {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 6,
+    fontFamily: "var(--golos)",
+    fontWeight: 800,
+    fontSize: 13,
+    whiteSpace: "nowrap",
+    color: on ? CREAM : INK,
+    background: on ? ORANGE : CREAM,
+    border: `3px solid ${INK}`,
+    boxShadow: `3px 3px 0 ${RUST}`,
+    padding: "5px 10px",
+    textDecoration: "none",
+  };
+  return href ? (
+    <a className="np-btn" href={href} download={download} style={style} title={title}>
+      {children}
+    </a>
+  ) : (
+    <button className="np-btn" onClick={onClick} style={style} title={title}>
+      {children}
+    </button>
+  );
+};
+
+export const Card: React.FC<{
+  n: number;
+  id: string;
+  title: string;
+  about: string;
+  open: boolean;
+  onToggle: () => void;
+  onHover: () => void;
+  onCode: () => void;
+  counts: Counts;
+  vote: Vote;
+  onVoted: (v: Vote, c: Counts | null) => void;
+  wide: boolean;
+  children: ReactNode;
+}> = ({ n, id, title, about, open, onToggle, onHover, onCode, counts, vote, onVoted, wide, children }) => {
+  const [busy, setBusy] = useState(false);
+  const cast = async (v: 1 | -1) => {
+    if (busy) return;
+    const next: Vote = vote === v ? 0 : v; // повторный клик снимает голос
+    setBusy(true);
+    const c = await sendVote(id, next, vote);
+    onVoted(next, c);
+    setBusy(false);
+  };
+  return (
+    <section
+      onMouseEnter={onHover}
+      style={{ background: CREAM, border: `5px solid ${INK}`, boxShadow: `8px 8px 0 ${RUST}`, display: "flex", flexDirection: "column", minWidth: 0 }}
+    >
+      <button
+        onClick={onToggle}
+        aria-expanded={open}
+        style={{ all: "unset", padding: "14px 18px 12px", borderBottom: open ? `4px solid ${INK}` : "none", display: "grid", gridTemplateColumns: "40px 1fr 28px", gap: 8, alignItems: "start" }}
+        className="np-head"
+      >
+        <span style={{ fontFamily: "var(--pixel)", fontSize: 22, color: ORANGE }}>{String(n).padStart(2, "0")}</span>
+        <span>
+          <span style={{ display: "block", fontFamily: "var(--golos)", fontWeight: 800, fontSize: 18, color: INK }}>{title}</span>
+          <span style={{ display: "block", fontFamily: "var(--golos)", fontWeight: 500, fontSize: 14, color: "#5A5249", marginTop: 3 }}>{about}</span>
+        </span>
+        <span style={{ fontFamily: "var(--pixel)", fontSize: 22, color: INK, transform: open ? "rotate(180deg)" : "none", transition: "transform 160ms", textAlign: "center" }}>▾</span>
+      </button>
+      {open && (
+        <div className="np-demo" style={{ display: "grid", placeItems: "center", padding: 18, background: "#FBF9F6", minWidth: 0, overflow: "hidden" }}>
+          {children}
+        </div>
+      )}
+      <footer style={{ display: "flex", flexWrap: "nowrap", gap: 8, padding: "10px 14px 14px", borderTop: open ? `4px solid ${INK}` : `3px dashed #CFC6BA`, alignItems: "center" }}>
+        {!open && <Btn onClick={onToggle}>▸ Открыть</Btn>}
+        <Btn onClick={onCode} title="Посмотреть код">{"</>"}{open ? " Код" : ""}</Btn>
+        <Btn href={`code/${id}.zip`} download={`${id}.zip`} title="Скачать исходники .zip">
+          ⤓{open ? " .zip" : ""}
+        </Btn>
+        <span style={{ flex: 1 }} />
+        <Btn onClick={() => cast(1)} on={vote === 1} title="Нравится">
+          ▲ {counts.up}
+        </Btn>
+        <Btn onClick={() => cast(-1)} on={vote === -1} title="Не нравится">
+          ▼ {counts.down}
+        </Btn>
+      </footer>
+    </section>
+  );
+};
+
+/** Окно с исходниками: вкладки по файлам, код как есть. */
+export const CodeModal: React.FC<{ id: string; title: string; onClose: () => void }> = ({ id, title, onClose }) => {
+  const [files, setFiles] = useState<string[]>([]);
+  const [cur, setCur] = useState(0);
+  const [text, setText] = useState("Загрузка…");
+  useEffect(() => {
+    fetch("code/index.json")
+      .then((r) => r.json())
+      .then((idx: Record<string, string[]>) => setFiles(idx[id] ?? []))
+      .catch(() => setText("Не удалось загрузить список файлов"));
+  }, [id]);
+  useEffect(() => {
+    if (!files[cur]) return;
+    fetch(`code/${id}/${files[cur]}`)
+      .then((r) => r.text())
+      .then(setText)
+      .catch(() => setText("Не удалось загрузить файл"));
+  }, [id, files, cur]);
+  useEffect(() => {
+    const k = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", k);
+    return () => window.removeEventListener("keydown", k);
+  }, [onClose]);
+  return (
+    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(4,5,10,0.72)", display: "grid", placeItems: "center", zIndex: 50, padding: 24 }}>
+      <div onClick={(e) => e.stopPropagation()} style={{ width: "min(1100px, 100%)", maxHeight: "86vh", display: "flex", flexDirection: "column", background: CREAM, border: `5px solid ${INK}`, boxShadow: `10px 10px 0 ${RUST}` }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", borderBottom: `4px solid ${INK}` }}>
+          <span style={{ fontFamily: "var(--golos)", fontWeight: 800, fontSize: 18, color: INK, flex: 1 }}>{title}</span>
+          <Btn href={`code/${id}.zip`} download={`${id}.zip`}>⤓ Скачать .zip</Btn>
+          <Btn onClick={() => navigator.clipboard?.writeText(text)}>Копировать</Btn>
+          <Btn onClick={onClose}>✕</Btn>
+        </div>
+        <div style={{ display: "flex", gap: 8, padding: "10px 16px 0", flexWrap: "wrap" }}>
+          {files.map((f, i) => (
+            <Btn key={f} on={i === cur} onClick={() => setCur(i)}>
+              {f}
+            </Btn>
+          ))}
+        </div>
+        <pre style={{ margin: 16, padding: 16, overflow: "auto", background: "#14171D", color: "#E9E4DC", fontSize: 13, lineHeight: 1.5, fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", flex: 1, border: `3px solid ${INK}` }}>{text}</pre>
+      </div>
+    </div>
+  );
+};

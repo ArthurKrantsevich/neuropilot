@@ -1,0 +1,178 @@
+/* Галерея компонентов. Палитра — как в роликах канала: тёплая бумага, терракотовый акцент. */
+:root {
+  --bg: #F4EEE6; --card: #fff; --ink: #1E1A16; --muted: #B4AAA0; --soft: #7A7068; --line: #E6DDD2;
+  --accent: #D9653B; --accent2: #F08A5D; --ok: #2FA36B;
+  --shadow: 0 30px 60px -20px rgb(70 45 25 / 0.28), 0 10px 20px -10px rgb(70 45 25 / 0.18);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.page { max-width: 1040px; margin: 0 auto; padding: 44px 20px 80px; display: grid; gap: 22px; }
+.top { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+.top h1 { margin: 0; font-size: 38px; letter-spacing: -0.03em; }
+.top p { margin: 6px 0 0; color: var(--soft); max-width: 560px; }
+.seg { display: inline-flex; padding: 4px; border-radius: 12px; background: #EBE2D6; }
+.seg button { border: 0; background: none; padding: 6px 12px; border-radius: 9px; font-weight: 700; font-size: 13px; color: var(--soft); }
+.seg button[aria-checked="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgb(70 45 25 / 0.15); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips a { text-decoration: none; color: var(--ink); background: #fff; border: 1px solid var(--line); padding: 7px 14px; border-radius: 999px; font-weight: 600; font-size: 14px; }
+.chips a:hover { border-color: var(--accent); color: var(--accent); }
+.item { background: var(--card); border-radius: 28px; padding: 22px 24px; display: grid; gap: 18px; box-shadow: var(--shadow); scroll-margin-top: 20px; }
+.item-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; flex-wrap: wrap; }
+.item h2 { margin: 0; font-size: 22px; letter-spacing: -0.01em; }
+.item p { margin: 4px 0 0; color: var(--soft); }
+.links { display: flex; gap: 14px; }
+.links a { color: var(--accent); font-weight: 700; text-decoration: none; white-space: nowrap; }
+/* сцена демо: тёплая подложка с точечной сеткой, как фон роликов */
+.demo { min-height: 240px; display: grid; place-items: center; background: #F7F2EC radial-gradient(rgb(30 26 22 / 0.07) 1.4px, transparent 1.6px) 0 0 / 26px 26px; border-radius: 22px; padding: 32px; overflow: hidden; }
+.item.wide .demo { padding: 20px; overflow-x: auto; place-items: start center; }
+
+/* выбор дат: поля заезда и выезда над пикером */
+.rp-card { background: #fff; border-radius: 22px; padding: 18px 22px 14px; box-shadow: var(--shadow); }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.field { padding: 10px 16px; border-radius: 16px; background: #f7f6fa; display: grid; gap: 2px; transition: background 0.3s, box-shadow 0.3s; }
+.field small { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.field b { font-size: 17px; font-weight: 600; }
+.field b.muted { color: #a9a5b3; font-weight: 500; }
+.field.active { background: #fff; box-shadow: inset 0 0 0 2px oklch(56% 0.21 282); }
+
+/* ── магнитная кнопка: дуэль «обычная против магнитной» ── */
+.duel { display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px; align-items: center; width: 100%; max-width: 820px; }
+.duel-side { display: grid; gap: 10px; }
+.duel-head { display: flex; justify-content: space-between; align-items: baseline; }
+.duel-tag { padding: 5px 12px; border-radius: 999px; background: var(--ink); color: #fff; font-weight: 800; font-size: 13px; }
+.duel-tag.hot { background: var(--accent); }
+.duel-count { font-weight: 900; font-size: 44px; line-height: 1; font-variant-numeric: tabular-nums; }
+.duel-vs { width: 52px; height: 52px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font-weight: 900; font-size: 18px; }
+.magnet-field { position: relative; height: 260px; border-radius: 26px; background: #FBF9F6; box-shadow: var(--shadow); display: grid; place-items: center; overflow: hidden; cursor: pointer; }
+.magnet-field.flat { cursor: default; }
+.magnet-radius { position: absolute; border-radius: 50%; border: 2px dashed rgb(217 101 59 / 0.5); transition: opacity 0.2s; pointer-events: none; }
+.magnetic { position: relative; border: 0; padding: 18px 34px; border-radius: 999px; background: linear-gradient(180deg, #E07A52, var(--accent)); color: #fff; font-weight: 800; font-size: 17px; box-shadow: 0 16px 34px rgb(217 101 59 / 0.35); transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.3); }
+.magnetic span { display: inline-block; transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.3); }
+.magnet-wave { position: absolute; inset: -6px; border-radius: 999px; border: 3px solid var(--accent); animation: wave 0.6s ease-out forwards; pointer-events: none; }
+@keyframes wave { to { transform: scale(1.8); opacity: 0; } }
+
+/* ── убегающая кнопка: белая карточка с точечной сеткой ── */
+.runaway-area { position: relative; width: 100%; max-width: 560px; height: 320px; border-radius: 30px; background: #fff radial-gradient(var(--line) 2px, transparent 2px) 0 0 / 30px 30px; box-shadow: var(--shadow); display: grid; place-items: center; overflow: hidden; }
+.runaway { border: 0; padding: 18px 36px; border-radius: 999px; background: var(--accent); color: #fff; font-weight: 800; font-size: 18px; box-shadow: 0 18px 40px -12px rgb(217 101 59 / 0.6); transition: transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.35); }
+
+/* ── 3D-карточка: слои на разной глубине, блик за курсором ── */
+.tilt-stage { perspective: 900px; padding: 20px; }
+.tilt { position: relative; width: 300px; height: 380px; border-radius: 30px; overflow: hidden; transform-style: preserve-3d; background: linear-gradient(145deg, #F0A27A 0%, #D9653B 45%, #7A2E1A 100%); box-shadow: var(--sx, 0) var(--sy, 30px) 60px rgb(70 45 25 / 0.38); transition: transform 0.15s ease-out, box-shadow 0.15s; color: #fff; }
+.tilt-chip { position: absolute; left: 24px; top: 24px; padding: 6px 14px; border-radius: 999px; background: rgb(255 255 255 / 0.22); font-weight: 700; font-size: 14px; transform: translateZ(80px); }
+.tilt-ring { position: absolute; right: -50px; top: 70px; width: 200px; height: 200px; border-radius: 50%; border: 16px solid rgb(255 255 255 / 0.18); transform: translateZ(20px); }
+.tilt-title { position: absolute; left: 24px; bottom: 64px; font-size: 42px; line-height: 1; transform: translateZ(60px); }
+.tilt-sub { position: absolute; left: 24px; bottom: 32px; font-weight: 600; font-size: 16px; color: rgb(255 255 255 / 0.8); transform: translateZ(40px); }
+.tilt-glare { position: absolute; inset: 0; background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgb(255 255 255 / 0.55), transparent 55%); mix-blend-mode: soft-light; pointer-events: none; }
+
+/* ── поле пароля с лицом ── */
+.pw { width: 360px; padding: 26px 26px 22px; border-radius: 30px; background: #fff; box-shadow: var(--shadow); display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+.pw-input { width: 100%; min-width: 0; height: 60px; border-radius: 16px; border: 3px solid var(--mood); padding: 0 18px; font: 700 22px "Inter", sans-serif; color: var(--ink); background: #fff; transition: border-color 0.3s; }
+.pw-input::placeholder { color: var(--muted); font-weight: 500; }
+.pw-input:focus { outline: none; }
+.pw-face { width: 170px; height: 170px; justify-self: center; }
+.pw-face circle:first-child { transition: fill 0.3s; }
+.pw-face.scared { animation: shake 0.12s linear infinite alternate; }
+@keyframes shake { from { transform: translateX(-4px); } to { transform: translateX(4px); } }
+.pw-meter { display: flex; gap: 8px; }
+.pw-meter i { flex: 1; height: 12px; border-radius: 6px; background: var(--line); transition: background 0.3s; }
+.pw-meter i.on { background: var(--mood); }
+.pw-label { text-align: center; font-weight: 800; font-size: 24px; color: var(--mood); transition: color 0.3s; }
+.pw-checks { list-style: none; margin: 0; padding: 12px 0 0; border-top: 1px solid var(--line); display: grid; gap: 6px; font-size: 14px; color: var(--muted); }
+.pw-checks li::before { content: ""; display: inline-block; width: 16px; height: 16px; margin-right: 10px; vertical-align: -3px; border-radius: 50%; border: 2px solid var(--line); transition: all 0.2s; }
+.pw-checks li.ok { color: var(--ink); }
+.pw-checks li.ok::before { border-color: var(--ok); background: var(--ok) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px no-repeat; }
+
+/* ── день/ночь: небо, облака, звёзды ── */
+.sky { position: relative; width: 340px; height: 400px; border-radius: 30px; overflow: hidden; box-shadow: var(--shadow); background: linear-gradient(180deg, #7FC4F5, #D6EEFF); transition: background 0.7s; }
+.sky::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, #101634, #2A305C); opacity: 0; transition: opacity 0.7s; }
+.sky.night::after { opacity: 1; }
+.sky > * { z-index: 1; }
+.star { position: absolute; border-radius: 50%; background: #fff; opacity: 0; transition: opacity 0.7s; z-index: 1; }
+.sky.night .star { opacity: 0.9; animation: twinkle 2s ease-in-out infinite alternate; }
+@keyframes twinkle { to { opacity: 0.35; } }
+.cloud { position: absolute; width: 90px; height: 32px; border-radius: 999px; background: #fff; opacity: 0.9; box-shadow: 22px -10px 0 4px #fff; transform-origin: left; transition: opacity 0.7s, translate 0.7s; z-index: 1; }
+.sky.night .cloud { opacity: 0; translate: 40px 0; }
+.toggle { position: absolute; left: 50%; top: 58%; translate: -50% -50%; width: 200px; height: 96px; border-radius: 999px; background: #fff; box-shadow: inset 0 6px 16px rgb(0 0 0 / 0.18); cursor: pointer; transition: background 0.7s; z-index: 2; }
+.sky.night .toggle { background: #1E2246; }
+.toggle input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.knob { position: absolute; top: 10px; left: 10px; width: 76px; height: 76px; border-radius: 50%; background: #FFC43D; box-shadow: 0 0 34px 10px rgb(255 196 61 / 0.6); transition: transform 0.7s cubic-bezier(0.6, 0, 0.3, 1), box-shadow 0.7s, background 0.7s; pointer-events: none; }
+.sky.night .knob { transform: translateX(104px) rotate(200deg); background: #E8ECF5; box-shadow: inset -22px -14px 0 3px #BEC6DC; }
+.sky-label { position: absolute; bottom: 26px; width: 100%; text-align: center; font-size: 24px; font-weight: 800; color: var(--ink); transition: color 0.7s; z-index: 2; }
+.sky.night .sky-label { color: #F0F0FA; }
+
+/* ── телефон для мобильных демо: iPhone 15 Pro 393×852, остров, строка статуса, полоска «домой» ── */
+.phone { position: relative; width: 393px; height: 852px; padding: 0; border-radius: 55px; background: var(--screen, #F4F2F8); box-shadow: 0 0 0 12px #111, 0 0 0 14px #333, 0 40px 80px rgb(70 45 25 / 0.35); overflow: hidden; }
+.phone-status { position: absolute; inset: 0 0 auto; height: 54px; display: flex; justify-content: space-between; align-items: center; padding: 6px 30px 0 36px; font-weight: 600; font-size: 17px; color: #111; z-index: 3; }
+.phone-island { position: absolute; top: 11px; left: 50%; width: 126px; height: 37px; margin-left: -63px; border-radius: 19px; background: #000; z-index: 4; }
+.phone-safe { position: absolute; inset: 59px 0 34px; overflow: hidden; }
+.phone-home { position: absolute; bottom: 8px; left: 50%; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; background: #111; z-index: 3; }
+.phone-scale { zoom: 0.62; margin: 14px; }
+
+/* Dynamic Island: экран уже со своим островом и строкой статуса — только корпус */
+.iphone-frame { padding: 12px; border-radius: 62px; background: #111; box-shadow: 0 30px 60px rgb(70 45 25 / 0.3), inset 0 0 0 2px #333; }
+.iphone-frame .iphone { border-radius: 50px; }
+.island-scale { zoom: 0.62; }
+
+@media (max-width: 760px) {
+  .top { flex-direction: column; }
+  .duel { grid-template-columns: 1fr; }
+  .duel-vs { justify-self: center; }
+}
+.phone-icons { display: flex; gap: 7px; align-items: center; }
+
+/* бенто */
+.bento-demo { display: grid; gap: 14px; width: 100%; max-width: 760px; margin: 0 auto; }
+.bento-tools { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+.bento-tools .seg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 12px; background: #eef0f5; }
+.bento-tools .seg button { min-height: 40px; padding: 0 16px; border: 0; border-radius: 9px; background: none; font: 600 15px system-ui, sans-serif; color: #555a62; cursor: pointer; }
+.bento-tools .seg button.on { background: #fff; color: #15171c; box-shadow: 0 1px 3px rgb(0 0 0 / .1); }
+.bento-check { display: flex; align-items: center; gap: 8px; font-size: 15px; }
+.bento-stage { width: 100%; padding: 14px; box-sizing: border-box; border-radius: 24px; background: #eef1f7; }
+.bento-code { margin: 0; padding: 14px 16px; border-radius: 12px; background: #15171c; color: #d8dbd4; font: 13px/1.6 "JetBrains Mono", ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* Неоморфизм: телефон с экраном 393×852 и метки «кнопка / не кнопка» поверх */
+.neu-demo { display: grid; gap: 14px; justify-items: center; }
+.neu-demo .bento-tools { width: 100%; }
+.neu-phone { width: min(100%, 417px); }
+.neu-frame { position: relative; width: 393px; height: 852px; border-radius: 55px; overflow: hidden; box-shadow: 0 0 0 12px #111, 0 30px 60px rgb(70 45 25 / .3); margin: 12px; zoom: var(--neu-zoom, 1); }
+@media (max-width: 460px) { .neu-frame { --neu-zoom: .78; } }
+.neu-mark { position: absolute; box-sizing: border-box; pointer-events: none; display: grid; place-items: start end; }
+.neu-mark.button { border: 3px solid #E8590C; }
+.neu-mark.button b { margin: -12px -12px 0 0; width: 28px; height: 28px; border-radius: 14px; background: #E8590C; color: #fff; font: 700 15px/28px system-ui, sans-serif; text-align: center; }
+.neu-mark.card { border: 2px dashed #8A96A8; place-items: start center; }
+.neu-mark.card span { margin-top: -13px; padding: 4px 10px; border-radius: 99px; background: #fff; color: #4E5B70; font: 600 13px system-ui, sans-serif; }
+.neu-bars { position: absolute; inset: 0; pointer-events: none; font: 600 17px system-ui, sans-serif; color: #2B3546; }
+.neu-bars span { position: absolute; top: 16px; left: 44px; }
+.neu-bars i { position: absolute; top: 11px; left: 133px; width: 126px; height: 37px; border-radius: 19px; background: #000; }
+.neu-bars em { position: absolute; bottom: 8px; left: 129px; width: 134px; height: 5px; border-radius: 3px; background: #2B3546; }
+.neu-meter { margin: 0; font-size: 15px; color: var(--muted, #5b6068); }
+.neu-meter b.bad { color: #C92A2A; } .neu-meter b.ok { color: #1C7A43; }
+
+/* Необрутализм: страница 840×520 целиком, на узком экране — уменьшенная */
+.brutal-demo { display: grid; gap: 14px; }
+.brutal-count { margin: 0; font-size: 15px; color: var(--muted, #5b6068); }
+.brutal-count b { font-size: 20px; color: var(--ink, #15171c); font-variant-numeric: tabular-nums; }
+.brutal-stage { width: 840px; max-width: 100%; border-radius: 18px; overflow: hidden; box-shadow: 0 0 0 1px rgb(0 0 0 / .08); }
+@media (max-width: 900px) { .brutal-stage { zoom: .8; } }
+@media (max-width: 700px) { .brutal-stage { zoom: .44; max-width: none; } }
+
+/* Клейморфизм: переключатели теней, большая кнопка на лиловом фоне и экран в телефоне */
+.clay-demo { display: grid; gap: 14px; justify-items: center; min-width: 0; }
+.clay-demo > * { max-width: 100%; min-width: 0; }
+.clay-demo .bento-tools, .clay-demo .neu-meter { width: 100%; }
+.clay-toggles { display: flex; flex-wrap: wrap; gap: 8px; }
+.clay-toggles label { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px; border-radius: 12px; background: #eef0f5; font: 600 15px system-ui, sans-serif; color: #555a62; cursor: pointer; }
+.clay-toggles label.on { background: #E6DCFF; color: #2E1F66; }
+.clay-toggles input { accent-color: #6A4FD8; }
+.clay-stage { width: 100%; box-sizing: border-box; display: grid; place-items: center; padding: 56px 20px 64px; border-radius: 24px; background: #F4EEFF; }
+@media (max-width: 460px) { .clay-stage { padding: 36px 14px 44px; } .clay-demo .neu-frame { --neu-zoom: .64; margin: 10px 0; } }
+
+/* Три эпохи айфона: слои эпох лежат друг на друге и плавно сменяются */
+.eras-demo { display: grid; gap: 14px; justify-items: center; min-width: 0; }
+.eras-demo > * { max-width: 100%; min-width: 0; }
+.eras-demo .bento-tools, .eras-demo .neu-meter { width: 100%; }
+.eras-seg { flex-wrap: wrap; }
+.eras-layer { position: absolute; inset: 0; transition: opacity .45s ease; }
+@media (max-width: 460px) { .eras-demo .neu-frame { --neu-zoom: .64; margin: 10px 0; } }

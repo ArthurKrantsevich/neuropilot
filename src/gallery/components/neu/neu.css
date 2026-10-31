@@ -1,0 +1,15 @@
+/* Неоморфизм «Гостиная»: экран 393×852 pt, элементы стоят по NEU_LAYOUT (абсолютно, как на макете). */
+.neu { position: relative; width: 393px; height: 852px; overflow: hidden; font-family: "Golos Text", "Inter", system-ui, sans-serif; }
+.neu-el { position: absolute; box-sizing: border-box; border: 0; padding: 0; margin: 0; background: #E0E5EC; font: inherit; color: inherit; }
+.neu-btn { display: grid; place-items: center; cursor: pointer; }
+.neu-btn:focus-visible { outline: 3px solid #2F6BDE; outline-offset: 4px; }
+.neu-title { position: absolute; left: 90px; right: 90px; top: 88px; text-align: center; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+.neu-dial { display: grid; place-items: center; }
+.neu-dial-in { width: 196px; height: 196px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+.neu-dial-in span { font-size: 16px; font-weight: 500; }
+.neu-dial-in b { font-size: 64px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.neu-now { position: absolute; left: 110px; right: 110px; top: 478px; text-align: center; font-size: 18px; font-weight: 600; }
+.neu-card { display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; padding: 18px 20px; }
+.neu-card span { font-size: 15px; font-weight: 500; }
+.neu-card b { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
+.neu-go { font-size: 18px; font-weight: 700; }

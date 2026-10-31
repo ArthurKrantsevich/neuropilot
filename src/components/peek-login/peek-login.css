@@ -1,0 +1,106 @@
+/* Форма входа с роботом-скромником. Двигаются только transform и opacity. */
+.pk {
+  width: min(360px, 100%);
+  margin: 0 auto;
+  padding: 0 24px 24px;
+  background: #f4f0ea;
+  color: #14171d;
+  border: 3px solid #14171d;
+  box-shadow: 8px 8px 0 #b85c3e;
+  display: grid;
+  gap: 14px;
+}
+.pk-head {
+  position: relative;
+  width: 220px;
+  height: 187px;
+  margin: 0 auto -6px;
+  overflow: hidden; /* ладони прячутся под нижним краем головы */
+  transform-origin: 50% 90%;
+  transition: transform 160ms ease-out;
+}
+.pk-head svg { display: block; width: 100%; height: 100%; }
+.pk-eyes { transition: transform 90ms ease-out; }
+.pk-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pk-blink 4.2s infinite;
+}
+.pk-eyes.happy .pk-eye { animation: none; transform: scaleY(0.3); transition: transform 120ms ease-out; }
+@keyframes pk-blink {
+  0%, 94%, 100% { transform: scaleY(1); }
+  97% { transform: scaleY(0.1); }
+}
+
+/* ладонь: пиксельная «варежка» цвета корпуса */
+.pk-hand {
+  position: absolute;
+  top: 66px;
+  width: 56px;
+  height: 48px;
+  background: #d2693f;
+  border: 4px solid #14171d;
+  /* пальцы — тёмные щели, ладонь — светлее экрана, чтобы читалась на нём */
+  background-image: repeating-linear-gradient(90deg, transparent 0 11px, #8e3f22 11px 13px);
+  background-size: 100% 60%;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 -8px 0 #b0532f;
+  transform: translateY(140px);
+  transition: transform 280ms cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+.pk-hand.left { left: 58px; }
+.pk-hand.right { left: 108px; transition-delay: 50ms; }
+.pk-hand.up { transform: translateY(0); }
+/* «показать пароль»: правая ладонь сползает — один глаз подглядывает */
+.pk-hand.right.peek { transform: translate(26px, 34px) rotate(-14deg); transition-delay: 0ms; }
+
+.pk-title { margin: 0; font-size: 26px; font-weight: 900; text-align: center; }
+.pk-field { display: grid; gap: 6px; font-weight: 700; font-size: 14px; }
+.pk-field input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 600;
+  color: #14171d;
+  background: #fff;
+  border: 3px solid #14171d;
+  outline: none;
+}
+.pk .pk-field input:focus, .pk .pk-field input:focus-visible { border-color: #d2693f; outline: none; box-shadow: none; }
+.pk-pass { position: relative; }
+.pk-pass input { padding-right: 96px; }
+.pk-show {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  background: #14171d;
+  color: #f4f0ea;
+  border: 0;
+  cursor: pointer;
+}
+.pk-submit {
+  margin-top: 4px;
+  padding: 14px;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 900;
+  color: #14171d;
+  background: #e08a5f;
+  border: 3px solid #14171d;
+  box-shadow: 4px 4px 0 #14171d;
+  cursor: pointer;
+  transition: transform 90ms ease-out;
+}
+.pk-submit:active { transform: translate(3px, 3px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pk-head, .pk-eyes, .pk-hand, .pk-submit { transition: none; }
+  .pk-eye { animation: none; }
+}

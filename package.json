@@ -4,9 +4,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "prebuild": "node scripts/code.mjs"
   },
   "dependencies": {
+    "@material/material-color-utilities": "^0.3.0",
     "@react-three/fiber": "^9.3.0",
     "@react-three/postprocessing": "^3.0.4",
     "next": "16.4.3",

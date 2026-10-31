@@ -1,0 +1,16 @@
+html,
+body {
+  margin: 0;
+  background: #04050a;
+  overflow: hidden;
+}
+
+/* полоса прокрутки меню — тонкая, в цветах канала */
+.np-list {
+  scrollbar-width: thin;
+  scrollbar-color: #9c4a31 transparent;
+}
+.np-list a:focus-visible {
+  outline: 3px solid #d97757;
+  outline-offset: 3px;
+}

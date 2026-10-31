@@ -2,8 +2,8 @@
 // 3D работает только в браузере: сцену грузим без серверного рендера.
 import dynamic from "next/dynamic";
 
-const Home = dynamic(() => import("./Home"), { ssr: false, loading: () => <div style={{ position: "fixed", inset: 0, background: "#05070B" }} /> });
+const SpaceHome = dynamic(() => import("./SpaceHome"), { ssr: false, loading: () => <div style={{ position: "fixed", inset: 0, background: "#05070B" }} /> });
 
 export default function HomeClient() {
-  return <Home />;
+  return <SpaceHome />;
 }

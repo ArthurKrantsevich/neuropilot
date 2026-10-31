@@ -40,7 +40,7 @@ function useClock() {
 
 // ---------- мир: бревно у края острова (верх бревна — y = 0); Юнит спиной к камере, смотрит вдаль (−z) ----------
 const LIFT = -1.65;
-const YAW = Math.PI; // строго спиной — без полуоборота
+const YAW = 0; // лицом к нам
 
 const logCells = (): Vox[] => {
   const out: Vox[] = [];
@@ -54,12 +54,12 @@ const logCells = (): Vox[] => {
       }
   return out;
 };
-// остров тянется к камере; передний край — сразу перед бревном, ножки висят над пустотой
+// остров уходит за спину Юнита; передний край — сразу перед бревном, ножки висят над пустотой к нам
 const islandCells = (): Vox[] => {
   const out: Vox[] = [];
   for (let x = -10; x <= 10; x++)
-    for (let z = 0; z <= 13; z++) {
-      const r = Math.hypot(x / 10.5, (z - 6) / 7);
+    for (let z = -13; z <= 0; z++) {
+      const r = Math.hypot(x / 10.5, (z + 6) / 7);
       if (r > 1) continue;
       const depth = 2 + Math.round((1 - r) * 8 + rnd(x * 31 + z, 1) * 2);
       for (let y = 0; y >= -depth; y--)
@@ -181,7 +181,9 @@ export default function BentoHome() {
   const [code, setCode] = useState<string | null>(null);
   const [counts, setCounts] = useState<Record<string, Counts>>({});
   const [votes, setVotes] = useState<Record<string, Vote>>({});
-  const look = useRef({ yaw: 0, pitch: -0.4 });
+  const look = useRef({ yaw: 0, pitch: 0 });
+  const lastMove = useRef(-99);
+  const [poke, setPoke] = useState<{ s: Pose2["screen"]; at: number } | null>(null);
   const dayK = useRef(0);
   const log = useMemo(logCells, []);
   const island = useMemo(islandCells, []);
@@ -195,7 +197,10 @@ export default function BentoHome() {
     setVotes(myVotes());
     loadCounts().then(setCounts);
     const onSize = () => setPortrait(window.innerWidth < window.innerHeight);
-    const onMove = (e: PointerEvent) => setPointer({ x: (e.clientX / window.innerWidth) * 2 - 1, y: -((e.clientY / window.innerHeight) * 2 - 1) });
+    const onMove = (e: PointerEvent) => {
+      setPointer({ x: (e.clientX / window.innerWidth) * 2 - 1, y: -((e.clientY / window.innerHeight) * 2 - 1) });
+      lastMove.current = performance.now() / 1000;
+    };
     onSize();
     window.addEventListener("resize", onSize);
     window.addEventListener("pointermove", onMove);
@@ -210,12 +215,15 @@ export default function BentoHome() {
   const day = dayK.current;
   const shoot = shootAt(t);
   // взгляд: карточка — через плечо на нас; падает звезда — провожает её; иначе — на планету и вокруг
+  const moving = performance.now() / 1000 - lastMove.current < 2.5;
   const target =
     hot && !portrait
-      ? { yaw: -1.25, pitch: 0.05 }
-      : shoot.ph > -0.1 && shoot.ph < 1.3
-        ? { yaw: 0.25 - 0.55 * smooth(Math.max(0, Math.min(1, shoot.ph))), pitch: -0.55 + 0.15 * shoot.ph }
-        : { yaw: 0.35 + 0.15 * Math.sin(t * 0.17), pitch: -0.5 + 0.06 * Math.sin(t * 0.31) };
+      ? { yaw: 0.75, pitch: 0.05 } // смотрит на карточки справа
+      : moving
+        ? { yaw: pointer.x * 0.8, pitch: -pointer.y * 0.35 } // следит за курсором
+        : Math.sin(t * 0.21) > 0.55
+          ? { yaw: -0.2 + 0.1 * Math.sin(t * 0.5), pitch: -0.55 } // поглядывает на звёзды
+          : { yaw: 0.1 * Math.sin(t * 0.17), pitch: 0.02 * Math.sin(t * 0.31) };
   look.current.yaw += (target.yaw - look.current.yaw) * 0.06;
   look.current.pitch += (target.pitch - look.current.pitch) * 0.06;
 
@@ -231,9 +239,9 @@ export default function BentoHome() {
     legL: { ...sit.legL, knee: sit.legL.knee + swing(0) },
     legR: { ...sit.legR, knee: sit.legR.knee + swing(2.4) },
     eye: "open",
-    screen: hot && THEME[hot.id] ? THEME[hot.id] : "face",
+    screen: poke && t - poke.at < 2.2 ? poke.s : hot && THEME[hot.id] ? THEME[hot.id] : "face",
     screenPrev: "face",
-    screenSince: hot ? Math.round(hot.at * FPS) : -999,
+    screenSince: poke && t - poke.at < 2.2 ? Math.round(poke.at * FPS) : hot ? Math.round(hot.at * FPS) : -999,
   };
 
   return (
@@ -244,7 +252,7 @@ export default function BentoHome() {
             <Rig pointer={pointer} portrait={portrait} />
             <hemisphereLight args={["#9DB4FF", "#0A0D14", 0.55 + day * 0.6]} />
             <directionalLight position={[-6, 16, -12]} intensity={1.4 + day * 1.2} color={day > 0.5 ? "#FFF2DC" : "#CFE0FF"} />
-            <pointLight position={[2.6, 0.8, 1.4]} intensity={18} color="#FFB36B" distance={14} />
+            <pointLight position={[2.8, 1.2, 0.4]} intensity={20} color="#FFB36B" distance={14} />
             <Stars t={t} day={day} />
             <ShootingStar t={t} />
             <group position={PLANET} rotation={[0.25, t * 0.05, 0.35]}>
@@ -253,20 +261,23 @@ export default function BentoHome() {
               </VoxelLookContext.Provider>
             </group>
             <VoxelLookContext.Provider value={{ kind: "basic", bevel: 0.12 }}>
-              <group position={[0, -1.7, -0.6]}>
+              <group position={[0, -1.7, 0.6]}>
                 <Voxels cells={island} />
               </group>
-              <group position={[0, -0.85, 0.75]}>
+              <group position={[0, -0.85, -0.75]}>
                 <Voxels cells={log} size={0.45} />
               </group>
             </VoxelLookContext.Provider>
-            {/* фонарик у бревна — тёплый свет на спину */}
-            <mesh position={[2.6, -1.0, 1.4]}>
+            {/* фонарик у бревна — тёплый свет сбоку */}
+            <mesh position={[2.8, -1.0, -1.6]}>
               <boxGeometry args={[0.5, 0.7, 0.5]} />
               <meshBasicMaterial color="#FFC98A" toneMapped={false} />
             </mesh>
             <VoxelLookContext.Provider value={{ kind: "toy", bevel: 0.14 }}>
-              <Unit3 f={f} frame={frame} />
+              {/* клик по Юниту — эмоция */}
+              <group onClick={(e) => { e.stopPropagation(); const s = (["love", "laugh", "stars", "wink"] as const)[Math.floor(Math.random() * 4)]; setPoke({ s, at: t }); }}>
+                <Unit3 f={f} frame={frame} />
+              </group>
             </VoxelLookContext.Provider>
             <EffectComposer multisampling={4}>
               <Bloom intensity={0.95} luminanceThreshold={0.6} mipmapBlur />

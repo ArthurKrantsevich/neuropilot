@@ -49,8 +49,11 @@ export const Card: React.FC<{
   vote: Vote;
   onVoted: (v: Vote, c: Counts | null) => void;
   wide: boolean;
+  lockedUntil: number; // мс UTC; 0 — компонент уже вышел
   children: ReactNode;
-}> = ({ n, id, title, about, open, onToggle, onHover, onCode, counts, vote, onVoted, wide, children }) => {
+}> = ({ n, id, title, about, open: openProp, onToggle, onHover, onCode, counts, vote, onVoted, lockedUntil, children }) => {
+  const locked = useLocked(lockedUntil);
+  const open = openProp && !locked;
   const [busy, setBusy] = useState(false);
   const [mounted, setMounted] = useState(open);
   useEffect(() => {
@@ -70,8 +73,9 @@ export const Card: React.FC<{
       style={{ background: CREAM, border: `5px solid ${INK}`, boxShadow: `8px 8px 0 ${RUST}`, display: "flex", flexDirection: "column", minWidth: 0 }}
     >
       <button
-        onClick={onToggle}
+        onClick={locked ? undefined : onToggle}
         aria-expanded={open}
+        disabled={locked}
         style={{ all: "unset", padding: "14px 18px 12px", borderBottom: open ? `4px solid ${INK}` : "none", display: "grid", gridTemplateColumns: "40px 1fr 28px", gap: 8, alignItems: "start" }}
         className="np-head"
       >
@@ -95,8 +99,21 @@ export const Card: React.FC<{
             {about}
           </span>
         </span>
-        <span style={{ fontFamily: "var(--pixel)", fontSize: 22, color: INK, transform: open ? "rotate(180deg)" : "none", transition: "transform 160ms", textAlign: "center" }}>▾</span>
+        <span style={{ fontFamily: "var(--pixel)", fontSize: 22, color: locked ? ORANGE : INK, transform: open ? "rotate(180deg)" : "none", transition: "transform 160ms", textAlign: "center" }}>
+          {locked ? (
+            // пиксельный замок
+            <svg width="20" height="24" viewBox="0 0 10 12" shape-rendering="crispEdges" style={{ display: "inline-block" }}>
+              <path d="M3 1h4v1h1v3H7V2H3v3H2V2h1z" fill="#14171D" />
+              <path d="M1 5h8v7H1z" fill="#14171D" />
+              <path d="M2 6h6v5H2z" fill="#D97757" />
+              <path d="M4 7h2v2H4z" fill="#14171D" />
+            </svg>
+          ) : (
+            "▾"
+          )}
+        </span>
       </button>
+      {locked && <LockedPanel until={lockedUntil} />}
       {/* плавное раскрытие: строка сетки 0fr → 1fr; демо монтируется при первом открытии и дальше живёт */}
       <div style={{ display: "grid", gridTemplateRows: open ? "1fr" : "0fr", transition: "grid-template-rows 420ms cubic-bezier(.2,.8,.2,1)" }}>
         <div style={{ overflow: "hidden", minHeight: 0 }}>
@@ -111,20 +128,103 @@ export const Card: React.FC<{
         </div>
       </div>
       <footer style={{ display: "flex", flexWrap: "nowrap", gap: 8, padding: "10px 14px 14px", borderTop: open ? `4px solid ${INK}` : `3px dashed #CFC6BA`, alignItems: "center" }}>
-        {!open && <Btn onClick={onToggle}>▸ Открыть</Btn>}
-        <Btn onClick={onCode} title="Посмотреть код">{"</>"}{open ? " Код" : ""}</Btn>
-        <Btn href={`code/${id}.zip`} download={`${id}.zip`} title="Скачать исходники .zip">
-          ⤓{open ? " .zip" : ""}
-        </Btn>
-        <span style={{ flex: 1 }} />
-        <Btn onClick={() => cast(1)} on={vote === 1} title="Нравится">
-          ▲ {counts.up}
-        </Btn>
-        <Btn onClick={() => cast(-1)} on={vote === -1} title="Не нравится">
-          ▼ {counts.down}
-        </Btn>
+        {locked ? (
+          <span style={{ fontFamily: "var(--golos)", fontWeight: 800, fontSize: 13, color: "#8A7F73" }}>Код и оценки откроются вместе с роликом</span>
+        ) : (
+          <>
+            {!open && <Btn onClick={onToggle}>▸ Открыть</Btn>}
+            <Btn onClick={onCode} title="Посмотреть код">{"</>"}{open ? " Код" : ""}</Btn>
+            <Btn href={`code/${id}.zip`} download={`${id}.zip`} title="Скачать исходники .zip">
+              ⤓{open ? " .zip" : ""}
+            </Btn>
+            <span style={{ flex: 1 }} />
+            <Btn onClick={() => cast(1)} on={vote === 1} title="Нравится">
+              ▲ {counts.up}
+            </Btn>
+            <Btn onClick={() => cast(-1)} on={vote === -1} title="Не нравится">
+              ▼ {counts.down}
+            </Btn>
+          </>
+        )}
       </footer>
     </section>
+  );
+};
+
+/** Заперто ли ещё: проверяем каждую секунду — ролик вышел, карточка открылась сама. */
+function useLocked(until: number) {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    if (!until || Date.now() >= until) return;
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, [until]);
+  return until > 0 && now < until;
+}
+
+const plural = (n: number, one: string, few: string, many: string) =>
+  n % 10 === 1 && n % 100 !== 11 ? one : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? few : many;
+
+/** «Юнит ещё собирает этот виджет»: пиксельное лицо с загрузкой, таймер до выхода ролика, полоска сборки. */
+const LockedPanel: React.FC<{ until: number }> = ({ until }) => {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+  const left = Math.max(0, until - now);
+  const s = Math.floor(left / 1000);
+  const d = Math.floor(s / 86400);
+  const hh = String(Math.floor((s % 86400) / 3600)).padStart(2, "0");
+  const mm = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
+  const ss = String(s % 60).padStart(2, "0");
+  const when = new Date(until).toLocaleString("ru-RU", { timeZone: "Europe/Moscow", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" });
+  // полоска: сколько «собрано» из последних трёх суток до выхода
+  const span = 3 * 86400 * 1000;
+  const done = Math.min(1, Math.max(0.04, 1 - left / span));
+  return (
+    <div className="np-locked" style={{ padding: "18px 18px 20px", background: "#FBF9F6", display: "grid", gridTemplateColumns: "96px 1fr", gap: 18, alignItems: "center", borderBottom: `4px solid ${INK}` }}>
+      {/* пиксельный Юнит: экран с кольцом загрузки */}
+      <div style={{ width: 96, height: 84, background: ORANGE, border: `4px solid ${INK}`, boxShadow: `4px 4px 0 ${RUST}`, position: "relative" }}>
+        <div style={{ position: "absolute", left: 10, top: 10, right: 10, bottom: 14, background: "#0F1319", display: "grid", placeItems: "center" }}>
+          <div className="np-spin" style={{ width: 30, height: 30, position: "relative" }}>
+            {Array.from({ length: 8 }, (_, i) => (
+              <span
+                key={i}
+                style={{
+                  position: "absolute",
+                  width: 6,
+                  height: 6,
+                  left: 12 + 12 * Math.cos((i / 8) * Math.PI * 2) - 0,
+                  top: 12 + 12 * Math.sin((i / 8) * Math.PI * 2) - 0,
+                  background: i === 0 ? "#FFF6EE" : i < 3 ? "#7FC4FF" : "#3A4150",
+                }}
+              />
+            ))}
+          </div>
+        </div>
+        <span style={{ position: "absolute", left: 42, top: -14, width: 8, height: 10, background: "#3B3F49" }} />
+        <span style={{ position: "absolute", left: 40, top: -22, width: 12, height: 10, background: "#FFAE73" }} />
+      </div>
+      <div>
+        <div style={{ fontFamily: "var(--golos)", fontWeight: 800, fontSize: 18, color: INK }}>Юнит ещё собирает этот виджет</div>
+        <div style={{ fontFamily: "var(--golos)", fontWeight: 500, fontSize: 14, color: "#5A5249", margin: "2px 0 10px" }}>Откроется вместе с роликом — {when} МСК</div>
+        <div style={{ display: "flex", gap: 8, alignItems: "baseline", fontFamily: "var(--golos)", color: INK }}>
+          {d > 0 && (
+            <>
+              <b style={{ fontFamily: "var(--pixel)", fontSize: 30, color: ORANGE }}>{d}</b>
+              <span style={{ fontWeight: 800, fontSize: 14 }}>{plural(d, "день", "дня", "дней")}</span>
+            </>
+          )}
+          <b style={{ fontFamily: "var(--pixel)", fontSize: 30, color: ORANGE, letterSpacing: 1 }}>
+            {hh}:{mm}:{ss}
+          </b>
+        </div>
+        <div style={{ marginTop: 10, height: 14, border: `3px solid ${INK}`, background: CREAM, boxShadow: `3px 3px 0 ${RUST}`, position: "relative", overflow: "hidden" }}>
+          <div className="np-build" style={{ position: "absolute", inset: 0, width: `${done * 100}%`, background: ORANGE }} />
+        </div>
+      </div>
+    </div>
   );
 };
 

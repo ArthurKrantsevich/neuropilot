@@ -29,3 +29,9 @@ a, button, label, select, summary, [role="button"], [role="radio"], input[type="
 .np-demo input[type="range"]:active::-webkit-slider-thumb { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #9c4a31; }
 .np-demo input[type="checkbox"] { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; background: #f4f0ea; border: 3px solid #14171d; box-shadow: 2px 2px 0 #9c4a31; vertical-align: -4px; margin-right: 6px; }
 .np-demo input[type="checkbox"]:checked { background: #d97757 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' shape-rendering='crispEdges'><path d='M2 6h2v2h2V4h2V2h2v2H8v2H6v2H4v2H2z' fill='%2314171D'/></svg>") center/12px no-repeat; }
+
+/* запертая карточка: кольцо загрузки на экране Юнита крутится шагами, полоска сборки «дышит» */
+@keyframes np-spin { to { transform: rotate(360deg); } }
+.np-spin { animation: np-spin 1.2s steps(8) infinite; }
+@keyframes np-build { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.18); } }
+.np-build { animation: np-build 1.6s ease-in-out infinite; background-image: repeating-linear-gradient(135deg, rgba(20,23,29,.18) 0 8px, transparent 8px 16px) !important; }

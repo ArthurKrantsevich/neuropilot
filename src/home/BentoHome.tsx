@@ -17,6 +17,7 @@ import { ITEMS } from "../gallery/demos";
 import { Card, CodeModal } from "./Card";
 import { Masonry } from "./Masonry";
 import { loadCounts, myVotes, type Counts, type Vote } from "./likes";
+import { releaseAt } from "./releases";
 import "../gallery/gallery.css";
 
 const smooth = (x: number) => x * x * (3 - 2 * x);
@@ -323,7 +324,7 @@ export default function BentoHome() {
             gap={24}
             items={ITEMS.map((it, i) => ({
               key: it.id,
-              full: WIDE.has(it.id) && open.has(it.id),
+              full: WIDE.has(it.id) && open.has(it.id) && releaseAt(it.id) <= Date.now(),
               node: (
               <Card
                 n={i + 1}
@@ -332,6 +333,7 @@ export default function BentoHome() {
                 about={it.about.ru}
                 open={open.has(it.id)}
                 wide={!portrait && WIDE.has(it.id)}
+                lockedUntil={releaseAt(it.id) > Date.now() ? releaseAt(it.id) : 0}
                 onToggle={() =>
                   setOpen((s) => {
                     const n = new Set(s);

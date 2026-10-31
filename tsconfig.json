@@ -21,7 +21,15 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "paths": {
+      "remotion": [
+        "./src/shims/remotion.tsx"
+      ],
+      "@remotion/three": [
+        "./src/shims/remotion-three.tsx"
+      ]
+    }
   },
   "include": [
     "next-env.d.ts",

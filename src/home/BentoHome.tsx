@@ -295,6 +295,20 @@ export default function BentoHome() {
     return () => window.removeEventListener("resize", onSize);
   }, []);
   const closeCode = useCallback(() => setCode(null), []);
+  // прямая ссылка из ролика: …/neuropilot/#peek-login — раскрыть эту карточку и прокрутить к ней
+  useEffect(() => {
+    const go = () => {
+      const id = decodeURIComponent(location.hash.slice(1));
+      if (!ITEMS.some((x) => x.id === id)) return;
+      setOpen((s) => new Set(s).add(id));
+      setHotId(id);
+      // кладка ставит карточки после замера высот — даём ей кадр-другой
+      setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }), 700);
+    };
+    go();
+    window.addEventListener("hashchange", go);
+    return () => window.removeEventListener("hashchange", go);
+  }, []);
 
   return (
     <div style={{ position: "fixed", inset: 0, background: "#04050A" }}>

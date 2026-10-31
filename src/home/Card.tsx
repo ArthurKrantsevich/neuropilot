@@ -69,6 +69,7 @@ export const Card: React.FC<{
   };
   return (
     <section
+      id={id}
       onMouseEnter={onHover}
       style={{ background: CREAM, border: `5px solid ${INK}`, boxShadow: `8px 8px 0 ${RUST}`, display: "flex", flexDirection: "column", minWidth: 0 }}
     >

@@ -7,7 +7,7 @@ import * as THREE from "three";
 import { FPS, FrameContext, SizeContext } from "../shims/remotion";
 import { LoftScene, UNIT_SPOTS, type Shot, type V3 } from "../studio/world/home/Loft";
 import { Unit3, type Frame } from "../studio/mascot/spike/RigSpike";
-import { clipFrames } from "../studio/mascot/spike/CatalogSpike";
+import { clipFrames, clipStart } from "../studio/mascot/spike/CatalogSpike";
 import { VoxelLookContext } from "../studio/mascot/voxel";
 
 const SPOT = UNIT_SPOTS[1]; // у стола под окном
@@ -91,10 +91,12 @@ export default function Home() {
   let f: Frame;
   if (playing && clip) {
     const c = clip[n];
-    f = { ...c, pos: [SPOT.pos[0] + c.pos[0], 0, SPOT.pos[2] + c.pos[2]], yaw: SPOT.yaw + c.yaw };
+    // смена экрана записана на шкале каталога — переносим на нашу
+    const since = c.screenSince != null ? c.screenSince - clipStart(act.id) + Math.round(act.start * FPS) : undefined;
+    f = { ...c, pos: [SPOT.pos[0] + c.pos[0], 0, SPOT.pos[2] + c.pos[2]], yaw: SPOT.yaw + c.yaw, screenSince: since };
   } else if (act.id === "sleepy" && clip) {
     const c = clip[clip.length - 1]; // уснул — держим последнюю позу
-    f = { ...c, pos: [SPOT.pos[0], 0, SPOT.pos[2]], yaw: SPOT.yaw };
+    f = { ...c, pos: [SPOT.pos[0], 0, SPOT.pos[2]], yaw: SPOT.yaw, screenPrev: c.screen, screenSince: -999 };
   } else {
     // покой: экран-лицо мягко следит за курсором
     const k = 0.08;
@@ -109,6 +111,8 @@ export default function Home() {
       squash: 0,
       eye: "open",
       screen: "face",
+      screenPrev: "face",
+      screenSince: -999,
     };
   }
 

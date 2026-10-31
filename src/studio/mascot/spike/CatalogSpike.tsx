@@ -952,6 +952,8 @@ function simulate(): CFrame[] {
 let CACHE: CFrame[] | null = null;
 const framesOf = () => (CACHE ??= simulate());
 /** Кадры одного клипа каталога (для тестовых сцен). */
+/** Кадр начала клипа на общей шкале каталога — чтобы пересчитать screenSince (смена экрана) на свою шкалу. */
+export const clipStart = (id: string) => Math.round(STARTS[CLIPS.findIndex((c) => c.id === id)] * CAT_FPS);
 export const clipFrames = (id: string) => {
   const i = CLIPS.findIndex((c) => c.id === id);
   const a = Math.round(STARTS[i] * CAT_FPS);

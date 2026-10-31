@@ -78,7 +78,22 @@ export const Card: React.FC<{
         <span style={{ fontFamily: "var(--pixel)", fontSize: 22, color: ORANGE }}>{String(n).padStart(2, "0")}</span>
         <span>
           <span style={{ display: "block", fontFamily: "var(--golos)", fontWeight: 800, fontSize: 18, color: INK }}>{title}</span>
-          <span style={{ display: "block", fontFamily: "var(--golos)", fontWeight: 500, fontSize: 14, color: "#5A5249", marginTop: 3 }}>{about}</span>
+          <span
+            style={{
+              fontFamily: "var(--golos)",
+              fontWeight: 500,
+              fontSize: 14,
+              color: "#5A5249",
+              marginTop: 3,
+              // свёрнута — три строки описания, развёрнута — целиком
+              display: "-webkit-box",
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: open ? "unset" : 3,
+              overflow: "hidden",
+            }}
+          >
+            {about}
+          </span>
         </span>
         <span style={{ fontFamily: "var(--pixel)", fontSize: 22, color: INK, transform: open ? "rotate(180deg)" : "none", transition: "transform 160ms", textAlign: "center" }}>▾</span>
       </button>

@@ -63,7 +63,7 @@ const islandCells = (): Vox[] => {
       if (r > 1) continue;
       const depth = 2 + Math.round((1 - r) * 8 + rnd(x * 31 + z, 1) * 2);
       for (let y = 0; y >= -depth; y--)
-        out.push([x, y, z, jitter(y === 0 ? (rnd(x, z) > 0.2 ? "#4C7F52" : "#5A8F5C") : ["#3A3F4C", "#454B59", "#2F3440"][(x + z + y + 9) % 3], `i${x}${y}${z}`, 0.08)]);
+        out.push([x, y, z, jitter(y === 0 ? (rnd(x, z) > 0.2 ? "#4C7F52" : "#5A8F5C") : ["#3A3F4C", "#454B59", "#2F3440"][(((x + z + y) % 3) + 3) % 3] /* остаток от отрицательных координат — тоже 0..2 */, `i${x}${y}${z}`, 0.08)]);
     }
   return out;
 };
@@ -171,16 +171,15 @@ const Rig: React.FC<{ pointer: { x: number; y: number }; portrait: boolean }> = 
   return null;
 };
 
-export default function BentoHome() {
+/** 3D-сцена со своими часами: 60 раз в секунду перерисовывается только она, колонка с демо — нет. */
+const Scene: React.FC<{ hotId: string | null; portrait: boolean }> = ({ hotId, portrait }) => {
   const frame = useClock();
   const t = frame / FPS;
   const [pointer, setPointer] = useState({ x: 0, y: 0 });
-  const [portrait, setPortrait] = useState(false);
-  const [hot, setHot] = useState<{ id: string; at: number } | null>(null);
-  const [open, setOpen] = useState<Set<string>>(() => new Set(["peek-login", "rolling-like"]));
-  const [code, setCode] = useState<string | null>(null);
-  const [counts, setCounts] = useState<Record<string, Counts>>({});
-  const [votes, setVotes] = useState<Record<string, Vote>>({});
+  // когда навели на новую карточку — запоминаем момент для шторки экрана
+  const hotRef = useRef<{ id: string; at: number } | null>(null);
+  if ((hotRef.current?.id ?? null) !== hotId) hotRef.current = hotId ? { id: hotId, at: t } : null;
+  const hot = hotRef.current;
   const look = useRef({ yaw: 0, pitch: 0 });
   const lastMove = useRef(-99);
   const [poke, setPoke] = useState<{ s: Pose2["screen"]; at: number } | null>(null);
@@ -194,27 +193,17 @@ export default function BentoHome() {
   }, []);
 
   useEffect(() => {
-    setVotes(myVotes());
-    loadCounts().then(setCounts);
-    const onSize = () => setPortrait(window.innerWidth < window.innerHeight);
     const onMove = (e: PointerEvent) => {
       setPointer({ x: (e.clientX / window.innerWidth) * 2 - 1, y: -((e.clientY / window.innerHeight) * 2 - 1) });
       lastMove.current = performance.now() / 1000;
     };
-    onSize();
-    window.addEventListener("resize", onSize);
     window.addEventListener("pointermove", onMove);
-    return () => {
-      window.removeEventListener("resize", onSize);
-      window.removeEventListener("pointermove", onMove);
-    };
+    return () => window.removeEventListener("pointermove", onMove);
   }, []);
-  const closeCode = useCallback(() => setCode(null), []);
 
   dayK.current += ((hot?.id === "toggle" ? 1 : 0) - dayK.current) * 0.04;
   const day = dayK.current;
-  const shoot = shootAt(t);
-  // взгляд: карточка — через плечо на нас; падает звезда — провожает её; иначе — на планету и вокруг
+  // взгляд: карточка — смотрит на неё; мышь — на курсор; иначе — на нас и иногда на звёзды
   const moving = performance.now() / 1000 - lastMove.current < 2.5;
   const target =
     hot && !portrait
@@ -246,8 +235,8 @@ export default function BentoHome() {
 
   return (
     <FrameContext.Provider value={frame}>
-      <div style={{ position: "fixed", inset: 0, background: `radial-gradient(ellipse at 25% 15%, ${day > 0.5 ? "#7FA8E8" : "#1B1F3A"} 0%, ${day > 0.5 ? "#3E5E9E" : "#090B16"} 55%, #04050A 100%)` }}>
-        <div style={{ position: "absolute", inset: portrait ? "0 0 52% 0" : 0 }}>
+      <div style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse at 25% 15%, ${day > 0.5 ? "#7FA8E8" : "#1B1F3A"} 0%, ${day > 0.5 ? "#3E5E9E" : "#090B16"} 55%, #04050A 100%)` }}>
+        <div style={{ position: "absolute", inset: portrait ? "0 0 62% 0" : 0 }}>
           <Canvas dpr={[1, 1.5]} camera={{ fov: 44, near: 0.3, far: 700 }} gl={{ alpha: true }}>
             <Rig pointer={pointer} portrait={portrait} />
             <hemisphereLight args={["#9DB4FF", "#0A0D14", 0.55 + day * 0.6]} />
@@ -262,10 +251,10 @@ export default function BentoHome() {
             </group>
             <VoxelLookContext.Provider value={{ kind: "basic", bevel: 0.12 }}>
               <group position={[0, -1.7, 0.6]}>
-                <Voxels cells={island} />
+                <Voxels cells={island} roughness={0.95} />
               </group>
               <group position={[0, -0.85, -0.75]}>
-                <Voxels cells={log} size={0.45} />
+                <Voxels cells={log} size={0.45} roughness={0.9} />
               </group>
             </VoxelLookContext.Provider>
             {/* фонарик у бревна — тёплый свет сбоку */}
@@ -284,14 +273,38 @@ export default function BentoHome() {
             </EffectComposer>
           </Canvas>
         </div>
+      </div>
+    </FrameContext.Provider>
+  );
+};
 
+export default function BentoHome() {
+  const [portrait, setPortrait] = useState(false);
+  const [hotId, setHotId] = useState<string | null>(null);
+  const [open, setOpen] = useState<Set<string>>(() => new Set(["peek-login", "rolling-like"]));
+  const [code, setCode] = useState<string | null>(null);
+  const [counts, setCounts] = useState<Record<string, Counts>>({});
+  const [votes, setVotes] = useState<Record<string, Vote>>({});
+  useEffect(() => {
+    setVotes(myVotes());
+    loadCounts().then(setCounts);
+    const onSize = () => setPortrait(window.innerWidth < window.innerHeight);
+    onSize();
+    window.addEventListener("resize", onSize);
+    return () => window.removeEventListener("resize", onSize);
+  }, []);
+  const closeCode = useCallback(() => setCode(null), []);
+
+  return (
+    <div style={{ position: "fixed", inset: 0, background: "#04050A" }}>
+      <Scene hotId={hotId} portrait={portrait} />
         {/* бенто справа */}
         <div
           className="np-scroll"
-          onMouseLeave={() => setHot(null)}
+          onMouseLeave={() => setHotId(null)}
           style={{
             position: "absolute",
-            top: portrait ? "48%" : 0,
+            top: portrait ? "38%" : 0,
             bottom: 0,
             right: 0,
             left: portrait ? 0 : "auto",
@@ -327,7 +340,7 @@ export default function BentoHome() {
                     return n;
                   })
                 }
-                onHover={() => setHot((h) => (h?.id === it.id ? h : { id: it.id, at: t }))}
+                onHover={() => setHotId(it.id)}
                 onCode={() => setCode(it.id)}
                 counts={counts[it.id] ?? { up: 0, down: 0 }}
                 vote={votes[it.id] ?? 0}
@@ -349,7 +362,6 @@ export default function BentoHome() {
           />
         </div>
         {code && <CodeModal id={code} title={ITEMS.find((x) => x.id === code)?.name.ru ?? code} onClose={closeCode} />}
-      </div>
-    </FrameContext.Provider>
+    </div>
   );
 }

@@ -56,9 +56,9 @@ Ogni scheda ha un link diretto: `https://arthurkrantsevich.github.io/neuropilot/
 
 | N. | Componente | Video |
 |---|---|---|
-| 01 | [Il menu hamburger è più vecchio del web: 1981](https://arthurkrantsevich.github.io/neuropilot/#hamburger-eras) · 🔒 si apre il 2 novembre, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/SmLj7brl5GY) |
-| 02 | [Perché i link sono blu: un link in 5 browser](https://arthurkrantsevich.github.io/neuropilot/#link-eras) · 🔒 si apre il 2 novembre, 12:00 MSK | [▶ Shorts](https://youtube.com/shorts/CVxceZ0Be0w) |
-| 03 | [Pulsante like con contatore a rullo](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 si apre il 1 novembre, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/pxRkWkUBKMs) |
+| 01 | [Il menu hamburger è più vecchio del web: 1981](https://arthurkrantsevich.github.io/neuropilot/#hamburger-eras) · 🔒 si apre il 2 novembre, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/Hv4BGCTQzVA) |
+| 02 | [Perché i link sono blu: un link in 5 browser](https://arthurkrantsevich.github.io/neuropilot/#link-eras) · 🔒 si apre il 2 novembre, 12:00 MSK | [▶ Shorts](https://youtube.com/shorts/dumVfOpeEfw) |
+| 03 | [Pulsante like con contatore a rullo](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 si apre il 1 novembre, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
 | 04 | [Un robot che non sbircia la tua password](https://arthurkrantsevich.github.io/neuropilot/#peek-login) · 🔒 si apre il 1 novembre, 12:00 MSK | [▶ Shorts](https://youtube.com/shorts/NPKJsUW097w) |
 | 05 | [Reazioni come su Telegram: 3 animazioni](https://arthurkrantsevich.github.io/neuropilot/#reactions) | [▶ Shorts](https://youtube.com/shorts/LLsAS_6bSJE) |
 | 06 | [Il ciclo dell'iPhone: pelle → piatto → vetro](https://arthurkrantsevich.github.io/neuropilot/#eras) | [▶ Shorts](https://youtube.com/shorts/S7m12REY37I) |

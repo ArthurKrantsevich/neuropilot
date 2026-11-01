@@ -56,9 +56,9 @@ Her kartın doğrudan bağlantısı var: `https://arthurkrantsevich.github.io/ne
 
 | No | Bileşen | Video |
 |---|---|---|
-| 01 | [Hamburger menü web'den eski: 1981](https://arthurkrantsevich.github.io/neuropilot/#hamburger-eras) · 🔒 2 Kasım, 18:00 MSK'de açılır | [▶ Shorts](https://youtube.com/shorts/SmLj7brl5GY) |
-| 02 | [Bağlantılar neden mavi: 5 tarayıcıda tek bağlantı](https://arthurkrantsevich.github.io/neuropilot/#link-eras) · 🔒 2 Kasım, 12:00 MSK'de açılır | [▶ Shorts](https://youtube.com/shorts/CVxceZ0Be0w) |
-| 03 | [Dönen sayaçlı beğen düğmesi](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 1 Kasım, 18:00 MSK'de açılır | [▶ Shorts](https://youtube.com/shorts/pxRkWkUBKMs) |
+| 01 | [Hamburger menü web'den eski: 1981](https://arthurkrantsevich.github.io/neuropilot/#hamburger-eras) · 🔒 2 Kasım, 18:00 MSK'de açılır | [▶ Shorts](https://youtube.com/shorts/Hv4BGCTQzVA) |
+| 02 | [Bağlantılar neden mavi: 5 tarayıcıda tek bağlantı](https://arthurkrantsevich.github.io/neuropilot/#link-eras) · 🔒 2 Kasım, 12:00 MSK'de açılır | [▶ Shorts](https://youtube.com/shorts/dumVfOpeEfw) |
+| 03 | [Dönen sayaçlı beğen düğmesi](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 1 Kasım, 18:00 MSK'de açılır | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
 | 04 | [Şifreni gözetlemeyen robot](https://arthurkrantsevich.github.io/neuropilot/#peek-login) · 🔒 1 Kasım, 12:00 MSK'de açılır | [▶ Shorts](https://youtube.com/shorts/NPKJsUW097w) |
 | 05 | [Telegram tarzı tepkiler: 3 animasyon](https://arthurkrantsevich.github.io/neuropilot/#reactions) | [▶ Shorts](https://youtube.com/shorts/LLsAS_6bSJE) |
 | 06 | [iPhone'un döngüsü: deri → düz → cam](https://arthurkrantsevich.github.io/neuropilot/#eras) | [▶ Shorts](https://youtube.com/shorts/S7m12REY37I) |

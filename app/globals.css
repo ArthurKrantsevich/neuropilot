@@ -58,3 +58,12 @@ a, button, label, select, summary, [role="button"], [role="radio"], input[type="
 @keyframes np-shrug { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-4deg); } 60% { transform: rotate(4deg); } }
 .np-shrug { animation: np-shrug 1.8s steps(6) infinite; }
 @media (prefers-reduced-motion: reduce) { .np-brick > *, .np-shrug { animation: none; } }
+
+/* прокрутка в окне кода — пиксельная, в цветах канала: тёмная дорожка, оранжевый бегунок с обводкой.
+   Chrome/Safari берут ::-webkit-scrollbar (scrollbar-color его отключил бы), Firefox — scrollbar-color */
+.np-code::-webkit-scrollbar { width: 16px; height: 16px; }
+.np-code::-webkit-scrollbar-track { background: #0f1319; }
+.np-code::-webkit-scrollbar-thumb { background: #d97757; border: 3px solid #14171d; box-shadow: inset -3px -3px 0 #9c4a31; }
+.np-code::-webkit-scrollbar-thumb:hover { background: #e8875f; }
+.np-code::-webkit-scrollbar-corner { background: #0f1319; }
+@supports (-moz-appearance: none) { .np-code { scrollbar-color: #d97757 #0f1319; } }

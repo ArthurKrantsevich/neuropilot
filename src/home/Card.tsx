@@ -288,7 +288,7 @@ export const CodeModal: React.FC<{ id: string; title: string; onClose: () => voi
             </Btn>
           ))}
         </div>
-        <pre style={{ margin: 16, padding: 16, overflow: "auto", background: "#14171D", color: "#E9E4DC", fontSize: 13, lineHeight: 1.5, fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", flex: 1, border: `3px solid ${INK}` }}>{text}</pre>
+        <pre className="np-code" style={{ margin: 16, padding: 16, overflow: "auto", background: "#14171D", color: "#E9E4DC", fontSize: 13, lineHeight: 1.5, fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", flex: 1, border: `3px solid ${INK}` }}>{text}</pre>
       </div>
     </div>
   );

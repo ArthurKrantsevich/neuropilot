@@ -58,7 +58,7 @@
 |---|---|---|
 | 01 | [Гамбургер-меню старше за веб: 1981](https://arthurkrantsevich.github.io/neuropilot/#hamburger-eras) · 🔒 відкриється 2 листопада, 18:00 МСК | [▶ Shorts](https://youtube.com/shorts/Hv4BGCTQzVA) |
 | 02 | [Чому посилання сині: одне посилання у 5 браузерах](https://arthurkrantsevich.github.io/neuropilot/#link-eras) · 🔒 відкриється 2 листопада, 12:00 МСК | [▶ Shorts](https://youtube.com/shorts/dumVfOpeEfw) |
-| 03 | [Лайк із лічильником-барабаном](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 відкриється 1 листопада, 18:00 МСК | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
+| 03 | [Лайк із лічильником-барабаном](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 відкриється 3 листопада, 18:00 МСК | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
 | 04 | [Робот не підглядає в пароль](https://arthurkrantsevich.github.io/neuropilot/#peek-login) · 🔒 відкриється 1 листопада, 12:00 МСК | [▶ Shorts](https://youtube.com/shorts/NPKJsUW097w) |
 | 05 | [Реакції як у Telegram: 3 анімації](https://arthurkrantsevich.github.io/neuropilot/#reactions) | [▶ Shorts](https://youtube.com/shorts/LLsAS_6bSJE) |
 | 06 | [Айфон майже 20 років по колу: шкіра → пласко → скло](https://arthurkrantsevich.github.io/neuropilot/#eras) | [▶ Shorts](https://youtube.com/shorts/S7m12REY37I) |

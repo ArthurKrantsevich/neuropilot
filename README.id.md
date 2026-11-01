@@ -58,7 +58,7 @@ Setiap kartu punya tautan langsung: `https://arthurkrantsevich.github.io/neuropi
 |---|---|---|
 | 01 | [Menu hamburger lebih tua dari web: 1981](https://arthurkrantsevich.github.io/neuropilot/#hamburger-eras) · 🔒 dibuka 2 November, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/Hv4BGCTQzVA) |
 | 02 | [Kenapa tautan berwarna biru: satu tautan di 5 browser](https://arthurkrantsevich.github.io/neuropilot/#link-eras) · 🔒 dibuka 2 November, 12:00 MSK | [▶ Shorts](https://youtube.com/shorts/dumVfOpeEfw) |
-| 03 | [Tombol suka dengan penghitung bergulir](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 dibuka 1 November, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
+| 03 | [Tombol suka dengan penghitung bergulir](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 dibuka 3 November, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
 | 04 | [Robot yang tidak mengintip kata sandimu](https://arthurkrantsevich.github.io/neuropilot/#peek-login) · 🔒 dibuka 1 November, 12:00 MSK | [▶ Shorts](https://youtube.com/shorts/NPKJsUW097w) |
 | 05 | [Reaksi ala Telegram: 3 animasi](https://arthurkrantsevich.github.io/neuropilot/#reactions) | [▶ Shorts](https://youtube.com/shorts/LLsAS_6bSJE) |
 | 06 | [Siklus iPhone: kulit → datar → kaca](https://arthurkrantsevich.github.io/neuropilot/#eras) | [▶ Shorts](https://youtube.com/shorts/S7m12REY37I) |

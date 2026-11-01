@@ -58,7 +58,7 @@ Cada tarjeta tiene enlace directo: `https://arthurkrantsevich.github.io/neuropil
 |---|---|---|
 | 01 | [El menú hamburguesa es más antiguo que la web: 1981](https://arthurkrantsevich.github.io/neuropilot/#hamburger-eras) · 🔒 se abre el 2 de noviembre, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/Hv4BGCTQzVA) |
 | 02 | [Por qué los enlaces son azules: un enlace en 5 navegadores](https://arthurkrantsevich.github.io/neuropilot/#link-eras) · 🔒 se abre el 2 de noviembre, 12:00 MSK | [▶ Shorts](https://youtube.com/shorts/dumVfOpeEfw) |
-| 03 | [Botón de like con contador giratorio](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 se abre el 1 de noviembre, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
+| 03 | [Botón de like con contador giratorio](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 se abre el 3 de noviembre, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
 | 04 | [Un robot que no espía tu contraseña](https://arthurkrantsevich.github.io/neuropilot/#peek-login) · 🔒 se abre el 1 de noviembre, 12:00 MSK | [▶ Shorts](https://youtube.com/shorts/NPKJsUW097w) |
 | 05 | [Reacciones como en Telegram: 3 animaciones](https://arthurkrantsevich.github.io/neuropilot/#reactions) | [▶ Shorts](https://youtube.com/shorts/LLsAS_6bSJE) |
 | 06 | [El círculo del iPhone: cuero → plano → cristal](https://arthurkrantsevich.github.io/neuropilot/#eras) | [▶ Shorts](https://youtube.com/shorts/S7m12REY37I) |

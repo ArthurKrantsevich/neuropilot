@@ -58,7 +58,7 @@ Jede Karte hat einen Direktlink: `https://arthurkrantsevich.github.io/neuropilot
 |---|---|---|
 | 01 | [Das Hamburger-Menü ist älter als das Web: 1981](https://arthurkrantsevich.github.io/neuropilot/#hamburger-eras) · 🔒 öffnet am 2. November, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/Hv4BGCTQzVA) |
 | 02 | [Warum Links blau sind: ein Link in 5 Browsern](https://arthurkrantsevich.github.io/neuropilot/#link-eras) · 🔒 öffnet am 2. November, 12:00 MSK | [▶ Shorts](https://youtube.com/shorts/dumVfOpeEfw) |
-| 03 | [Like-Button mit rollendem Zähler](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 öffnet am 1. November, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
+| 03 | [Like-Button mit rollendem Zähler](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 öffnet am 3. November, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
 | 04 | [Ein Roboter, der nicht aufs Passwort schaut](https://arthurkrantsevich.github.io/neuropilot/#peek-login) · 🔒 öffnet am 1. November, 12:00 MSK | [▶ Shorts](https://youtube.com/shorts/NPKJsUW097w) |
 | 05 | [Reaktionen wie in Telegram: 3 Animationen](https://arthurkrantsevich.github.io/neuropilot/#reactions) | [▶ Shorts](https://youtube.com/shorts/LLsAS_6bSJE) |
 | 06 | [Der iPhone-Kreislauf: Leder → flach → Glas](https://arthurkrantsevich.github.io/neuropilot/#eras) | [▶ Shorts](https://youtube.com/shorts/S7m12REY37I) |

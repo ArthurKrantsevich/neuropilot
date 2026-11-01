@@ -58,7 +58,7 @@
 |---|---|---|
 | 01 | [हैमबर्गर मेन्यू वेब से पुराना है: 1981](https://arthurkrantsevich.github.io/neuropilot/#hamburger-eras) · 🔒 2 नवंबर, 18:00 MSK पर खुलेगा | [▶ Shorts](https://youtube.com/shorts/Hv4BGCTQzVA) |
 | 02 | [लिंक नीले क्यों होते हैं: 5 ब्राउज़र में एक लिंक](https://arthurkrantsevich.github.io/neuropilot/#link-eras) · 🔒 2 नवंबर, 12:00 MSK पर खुलेगा | [▶ Shorts](https://youtube.com/shorts/dumVfOpeEfw) |
-| 03 | [घूमते काउंटर वाला लाइक बटन](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 1 नवंबर, 18:00 MSK पर खुलेगा | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
+| 03 | [घूमते काउंटर वाला लाइक बटन](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 3 नवंबर, 18:00 MSK पर खुलेगा | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
 | 04 | [ऐसा रोबोट जो आपका पासवर्ड नहीं देखता](https://arthurkrantsevich.github.io/neuropilot/#peek-login) · 🔒 1 नवंबर, 12:00 MSK पर खुलेगा | [▶ Shorts](https://youtube.com/shorts/NPKJsUW097w) |
 | 05 | [Telegram जैसे रिएक्शन: 3 एनिमेशन](https://arthurkrantsevich.github.io/neuropilot/#reactions) | [▶ Shorts](https://youtube.com/shorts/LLsAS_6bSJE) |
 | 06 | [iPhone का चक्र: चमड़ा → फ्लैट → कांच](https://arthurkrantsevich.github.io/neuropilot/#eras) | [▶ Shorts](https://youtube.com/shorts/S7m12REY37I) |

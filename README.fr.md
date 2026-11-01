@@ -58,7 +58,7 @@ Chaque carte a un lien direct : `https://arthurkrantsevich.github.io/neuropilot/
 |---|---|---|
 | 01 | [Le menu hamburger est plus vieux que le web : 1981](https://arthurkrantsevich.github.io/neuropilot/#hamburger-eras) · 🔒 ouvre le 2 novembre, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/Hv4BGCTQzVA) |
 | 02 | [Pourquoi les liens sont bleus : un lien dans 5 navigateurs](https://arthurkrantsevich.github.io/neuropilot/#link-eras) · 🔒 ouvre le 2 novembre, 12:00 MSK | [▶ Shorts](https://youtube.com/shorts/dumVfOpeEfw) |
-| 03 | [Bouton j'aime avec compteur à rouleaux](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 ouvre le 1 novembre, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
+| 03 | [Bouton j'aime avec compteur à rouleaux](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 ouvre le 3 novembre, 18:00 MSK | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
 | 04 | [Un robot qui ne regarde pas ton mot de passe](https://arthurkrantsevich.github.io/neuropilot/#peek-login) · 🔒 ouvre le 1 novembre, 12:00 MSK | [▶ Shorts](https://youtube.com/shorts/NPKJsUW097w) |
 | 05 | [Réactions comme sur Telegram : 3 animations](https://arthurkrantsevich.github.io/neuropilot/#reactions) | [▶ Shorts](https://youtube.com/shorts/LLsAS_6bSJE) |
 | 06 | [Le cycle de l'iPhone : cuir → plat → verre](https://arthurkrantsevich.github.io/neuropilot/#eras) | [▶ Shorts](https://youtube.com/shorts/S7m12REY37I) |

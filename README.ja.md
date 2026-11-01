@@ -58,7 +58,7 @@
 |---|---|---|
 | 01 | [ハンバーガーメニューはウェブより古い：1981年](https://arthurkrantsevich.github.io/neuropilot/#hamburger-eras) · 🔒 11月2日 18:00（モスクワ時間）に公開 | [▶ Shorts](https://youtube.com/shorts/Hv4BGCTQzVA) |
 | 02 | [リンクが青い理由：5つのブラウザで1つのリンク](https://arthurkrantsevich.github.io/neuropilot/#link-eras) · 🔒 11月2日 12:00（モスクワ時間）に公開 | [▶ Shorts](https://youtube.com/shorts/dumVfOpeEfw) |
-| 03 | [回転カウンター付きのいいねボタン](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 11月1日 18:00（モスクワ時間）に公開 | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
+| 03 | [回転カウンター付きのいいねボタン](https://arthurkrantsevich.github.io/neuropilot/#rolling-like) · 🔒 11月3日 18:00（モスクワ時間）に公開 | [▶ Shorts](https://youtube.com/shorts/_lVmxqEXWZg) |
 | 04 | [パスワードをのぞかないロボット](https://arthurkrantsevich.github.io/neuropilot/#peek-login) · 🔒 11月1日 12:00（モスクワ時間）に公開 | [▶ Shorts](https://youtube.com/shorts/NPKJsUW097w) |
 | 05 | [Telegram風リアクション：3つのアニメーション](https://arthurkrantsevich.github.io/neuropilot/#reactions) | [▶ Shorts](https://youtube.com/shorts/LLsAS_6bSJE) |
 | 06 | [iPhoneの一巡：革 → フラット → ガラス](https://arthurkrantsevich.github.io/neuropilot/#eras) | [▶ Shorts](https://youtube.com/shorts/S7m12REY37I) |

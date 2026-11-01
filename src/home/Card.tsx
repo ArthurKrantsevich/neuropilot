@@ -273,8 +273,8 @@ export const CodeModal: React.FC<{ id: string; title: string; onClose: () => voi
     return () => window.removeEventListener("keydown", k);
   }, [onClose]);
   return (
-    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(4,5,10,0.72)", display: "grid", placeItems: "center", zIndex: 50, padding: 24 }}>
-      <div onClick={(e) => e.stopPropagation()} style={{ width: "min(1100px, 100%)", maxHeight: "86vh", display: "flex", flexDirection: "column", background: CREAM, border: `5px solid ${INK}`, boxShadow: `10px 10px 0 ${RUST}` }}>
+    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(4,5,10,0.72)", display: "grid", gridTemplateColumns: "minmax(0, 1100px)", justifyContent: "center", alignContent: "center", zIndex: 50, padding: 24 }}>
+      <div onClick={(e) => e.stopPropagation()} style={{ width: "100%", minWidth: 0, maxHeight: "86vh", display: "flex", flexDirection: "column", background: CREAM, border: `5px solid ${INK}`, boxShadow: `10px 10px 0 ${RUST}` }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", borderBottom: `4px solid ${INK}` }}>
           <span style={{ fontFamily: "var(--golos)", fontWeight: 800, fontSize: 18, color: INK, flex: 1 }}>{title}</span>
           <Btn href={`code/${id}.zip`} download={`${id}.zip`}>⤓ Скачать .zip</Btn>

@@ -169,7 +169,7 @@ const Rig: React.FC<{ pointer: { x: number; y: number }; portrait: boolean }> = 
   }, [gl, scene]);
   const cam = camera as THREE.PerspectiveCamera;
   // строго сзади: камера смотрит туда же, куда Юнит; сдвинута вправо — он в левой трети
-  const x = portrait ? 0 : 9;
+  const x = portrait ? 0 : 12.5; // камера правее — Юнит левее, подальше от колонки карточек
   cam.position.set(x + pointer.x * 1.2, 7 + pointer.y * 0.8, portrait ? 30 : 28);
   cam.fov = portrait ? 58 : 44;
   cam.lookAt(x, 8.5, -30);

@@ -18,6 +18,8 @@ import { Card, CodeModal } from "./Card";
 import { Masonry } from "./Masonry";
 import { loadCounts, myVotes, type Counts, type Vote } from "./likes";
 import { releaseAt } from "./releases";
+import { apply, type Sort, type Tag } from "./filters";
+import { Empty, Toolbar } from "./Toolbar";
 import "../gallery/gallery.css";
 
 const smooth = (x: number) => x * x * (3 - 2 * x);
@@ -147,6 +149,9 @@ const THEME: Record<string, Pose2["screen"]> = {
   magnetic: "love",
   tilt: "confused",
 };
+// тег выбран — на экране Юнита его тема; ищем — вопрос; пусто — недоумение
+const TAG_SCREEN: Record<Tag, Pose2["screen"]> = { styles: "stars", motion: "bolt", forms: "check", layout: "code", history: "think" };
+export type Mood = { screen: Pose2["screen"]; strong: boolean } | null;
 const WIDE = new Set(["hamburger-eras", "eras", "bento", "range-picker", "material", "clay", "brutal", "neu", "link-eras", "card", "reactions"]);
 
 const Rig: React.FC<{ pointer: { x: number; y: number }; portrait: boolean }> = ({ pointer, portrait }) => {
@@ -173,7 +178,7 @@ const Rig: React.FC<{ pointer: { x: number; y: number }; portrait: boolean }> = 
 };
 
 /** 3D-сцена со своими часами: 60 раз в секунду перерисовывается только она, колонка с демо — нет. */
-const Scene: React.FC<{ hotId: string | null; portrait: boolean }> = ({ hotId, portrait }) => {
+const Scene: React.FC<{ hotId: string | null; portrait: boolean; mood: Mood }> = ({ hotId, portrait, mood }) => {
   const frame = useClock();
   const t = frame / FPS;
   const [pointer, setPointer] = useState({ x: 0, y: 0 });
@@ -181,6 +186,12 @@ const Scene: React.FC<{ hotId: string | null; portrait: boolean }> = ({ hotId, p
   const hotRef = useRef<{ id: string; at: number } | null>(null);
   if ((hotRef.current?.id ?? null) !== hotId) hotRef.current = hotId ? { id: hotId, at: t } : null;
   const hot = hotRef.current;
+  // настроение от поиска: запоминаем момент смены для шторки экрана
+  const moodRef = useRef<{ s: Pose2["screen"]; at: number } | null>(null);
+  if ((moodRef.current?.s ?? null) !== (mood?.screen ?? null)) moodRef.current = mood ? { s: mood.screen, at: t } : null;
+  const md = moodRef.current;
+  // ищем или ничего не нашлось — это главнее карточки под курсором
+  const strong = !!mood?.strong;
   const look = useRef({ yaw: 0, pitch: 0 });
   const lastMove = useRef(-99);
   const [poke, setPoke] = useState<{ s: Pose2["screen"]; at: number } | null>(null);
@@ -207,7 +218,9 @@ const Scene: React.FC<{ hotId: string | null; portrait: boolean }> = ({ hotId, p
   // взгляд: карточка — смотрит на неё; мышь — на курсор; иначе — на нас и иногда на звёзды
   const moving = performance.now() / 1000 - lastMove.current < 2.5;
   const target =
-    hot && !portrait
+    md && strong && !portrait
+      ? { yaw: 0.8, pitch: -0.22 } // смотрит на строку поиска справа вверху
+      : hot && !portrait
       ? { yaw: 0.75, pitch: 0.05 } // смотрит на карточки справа
       : moving
         ? { yaw: pointer.x * 0.8, pitch: -pointer.y * 0.35 } // следит за курсором
@@ -217,6 +230,14 @@ const Scene: React.FC<{ hotId: string | null; portrait: boolean }> = ({ hotId, p
   look.current.yaw += (target.yaw - look.current.yaw) * 0.06;
   look.current.pitch += (target.pitch - look.current.pitch) * 0.06;
 
+  function screenOf(): { screen: Pose2["screen"]; screenSince: number } {
+    const since = (x: number) => Math.round(x * FPS);
+    if (poke && t - poke.at < 2.2) return { screen: poke.s, screenSince: since(poke.at) };
+    if (md && strong) return { screen: md.s, screenSince: since(md.at) };
+    if (hot && THEME[hot.id]) return { screen: THEME[hot.id], screenSince: since(hot.at) };
+    if (md) return { screen: md.s, screenSince: since(md.at) };
+    return { screen: "face", screenSince: -999 };
+  }
   const swing = (ph: number) => 0.3 * Math.sin(t * 2.0 + ph);
   const f: Frame = {
     ...sit,
@@ -229,9 +250,8 @@ const Scene: React.FC<{ hotId: string | null; portrait: boolean }> = ({ hotId, p
     legL: { ...sit.legL, knee: sit.legL.knee + swing(0) },
     legR: { ...sit.legR, knee: sit.legR.knee + swing(2.4) },
     eye: "open",
-    screen: poke && t - poke.at < 2.2 ? poke.s : hot && THEME[hot.id] ? THEME[hot.id] : "face",
+    ...screenOf(),
     screenPrev: "face",
-    screenSince: poke && t - poke.at < 2.2 ? Math.round(poke.at * FPS) : hot ? Math.round(hot.at * FPS) : -999,
   };
 
   return (
@@ -286,6 +306,39 @@ export default function BentoHome() {
   const [code, setCode] = useState<string | null>(null);
   const [counts, setCounts] = useState<Record<string, Counts>>({});
   const [votes, setVotes] = useState<Record<string, Vote>>({});
+  const [q, setQ] = useState("");
+  const [tag, setTag] = useState<Tag | null>(null);
+  const [sort, setSort] = useState<Sort>("new");
+  const [focus, setFocus] = useState(false);
+  // поиск живёт в адресе: ?q=тень&tag=styles&sort=popular — можно отправить ссылку
+  useEffect(() => {
+    const u = new URLSearchParams(location.search);
+    setQ(u.get("q") ?? "");
+    const tg = u.get("tag") as Tag | null;
+    if (tg && ["styles", "motion", "forms", "layout", "history"].includes(tg)) setTag(tg);
+    const so = u.get("sort") as Sort | null;
+    if (so && ["new", "popular", "soon"].includes(so)) setSort(so);
+  }, []);
+  useEffect(() => {
+    const u = new URLSearchParams();
+    if (q.trim()) u.set("q", q.trim());
+    if (tag) u.set("tag", tag);
+    if (sort !== "new") u.set("sort", sort);
+    const qs = u.toString();
+    history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + location.hash);
+  }, [q, tag, sort]);
+  const list = useMemo(
+    () => apply(ITEMS.map((it, i) => ({ ...it, n: i + 1, title: it.name.ru, about: it.about.ru })), q, tag, sort, Date.now()),
+    [q, tag, sort],
+  );
+  const mood: Mood =
+    (q.trim() || tag) && list.length === 0
+      ? { screen: "confused", strong: true }
+      : focus || q.trim()
+        ? { screen: "ask", strong: true }
+        : tag
+          ? { screen: TAG_SCREEN[tag], strong: false }
+          : null;
   useEffect(() => {
     setVotes(myVotes());
     loadCounts().then(setCounts);
@@ -312,7 +365,7 @@ export default function BentoHome() {
 
   return (
     <div style={{ position: "fixed", inset: 0, background: "#04050A" }}>
-      <Scene hotId={hotId} portrait={portrait} />
+      <Scene hotId={hotId} portrait={portrait} mood={mood} />
         {/* бенто справа */}
         <div
           className="np-scroll"
@@ -333,18 +386,21 @@ export default function BentoHome() {
           <div style={{ fontFamily: "var(--golos)", fontSize: 18, color: "#AEB6C8", margin: "6px 0 24px" }}>
             Канал, который ведёт ИИ. Здесь живут компоненты из роликов — все {ITEMS.length}: потрогай, забери код, оцени.
           </div>
+          <Toolbar q={q} setQ={setQ} tag={tag} setTag={setTag} sort={sort} setSort={setSort} found={list.length} total={ITEMS.length} compact={portrait} onFocus={setFocus} />
+          {list.length === 0 && <Empty q={q.trim()} onHint={(h) => (setQ(h), setTag(null))} />}
           <Masonry
             columns={portrait ? 1 : 2}
             gap={24}
-            items={ITEMS.map((it, i) => ({
+            items={list.map((it) => ({
               key: it.id,
               full: WIDE.has(it.id) && open.has(it.id) && releaseAt(it.id) <= Date.now(),
               node: (
               <Card
-                n={i + 1}
+                n={it.n}
                 id={it.id}
-                title={it.name.ru}
-                about={it.about.ru}
+                title={it.title}
+                about={it.about}
+                query={q}
                 open={open.has(it.id)}
                 wide={!portrait && WIDE.has(it.id)}
                 lockedUntil={releaseAt(it.id) > Date.now() ? releaseAt(it.id) : 0}

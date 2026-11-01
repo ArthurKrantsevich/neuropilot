@@ -3,6 +3,7 @@
 // Снизу: «Код» (окно с файлами), «Скачать .zip», общие лайки «нравится / не нравится».
 import { useEffect, useState, type ReactNode } from "react";
 import { sendVote, type Counts, type Vote } from "./likes";
+import { stems } from "./filters";
 
 const INK = "#14171D";
 const CREAM = "#F4F0EA";
@@ -36,6 +37,24 @@ export const Btn: React.FC<{ onClick?: () => void; href?: string; download?: str
   );
 };
 
+// подсветка найденных слов (ё = е, регистр не важен — длина строки при этом не меняется)
+const Marked: React.FC<{ text: string; q: string }> = ({ text, q }) => {
+  const words = stems(q).filter((w) => w.length > 1);
+  if (!words.length) return <>{text}</>;
+  const low = text.toLowerCase().replace(/ё/g, "е");
+  const marks: boolean[] = new Array(text.length).fill(false);
+  for (const w of words) for (let i = low.indexOf(w); i >= 0; i = low.indexOf(w, i + 1)) marks.fill(true, i, i + w.length);
+  const out: ReactNode[] = [];
+  let i = 0;
+  while (i < text.length) {
+    let j = i;
+    while (j < text.length && marks[j] === marks[i]) j++;
+    out.push(marks[i] ? <mark key={i} className="np-mark">{text.slice(i, j)}</mark> : text.slice(i, j));
+    i = j;
+  }
+  return <>{out}</>;
+};
+
 export const Card: React.FC<{
   n: number;
   id: string;
@@ -50,8 +69,9 @@ export const Card: React.FC<{
   onVoted: (v: Vote, c: Counts | null) => void;
   wide: boolean;
   lockedUntil: number; // мс UTC; 0 — компонент уже вышел
+  query?: string; // что ищут — подсветить в названии и описании
   children: ReactNode;
-}> = ({ n, id, title, about, open: openProp, onToggle, onHover, onCode, counts, vote, onVoted, lockedUntil, children }) => {
+}> = ({ n, id, title, about, query = "", open: openProp, onToggle, onHover, onCode, counts, vote, onVoted, lockedUntil, children }) => {
   const locked = useLocked(lockedUntil);
   const open = openProp && !locked;
   const [busy, setBusy] = useState(false);
@@ -82,7 +102,7 @@ export const Card: React.FC<{
       >
         <span style={{ fontFamily: "var(--pixel)", fontSize: 22, color: ORANGE }}>{String(n).padStart(2, "0")}</span>
         <span>
-          <span style={{ display: "block", fontFamily: "var(--golos)", fontWeight: 800, fontSize: 18, color: INK }}>{title}</span>
+          <span style={{ display: "block", fontFamily: "var(--golos)", fontWeight: 800, fontSize: 18, color: INK }}><Marked text={title} q={query} /></span>
           <span
             style={{
               fontFamily: "var(--golos)",
@@ -97,7 +117,7 @@ export const Card: React.FC<{
               overflow: "hidden",
             }}
           >
-            {about}
+            <Marked text={about} q={query} />
           </span>
         </span>
         <span style={{ fontFamily: "var(--pixel)", fontSize: 22, color: locked ? ORANGE : INK, transform: open ? "rotate(180deg)" : "none", transition: "transform 160ms", textAlign: "center" }}>

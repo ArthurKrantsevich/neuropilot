@@ -35,3 +35,26 @@ a, button, label, select, summary, [role="button"], [role="radio"], input[type="
 .np-spin { animation: np-spin 1.2s steps(8) infinite; }
 @keyframes np-build { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.18); } }
 .np-build { animation: np-build 1.6s ease-in-out infinite; background-image: repeating-linear-gradient(135deg, rgba(20,23,29,.18) 0 8px, transparent 8px 16px) !important; }
+
+/* панель поиска: под ней при прокрутке — затемнение, чтобы карточки не мельтешили в зазоре */
+.np-bar::before { content: ""; position: absolute; inset: 0 -24px; background: linear-gradient(rgba(4,5,10,.92) 60%, rgba(4,5,10,0)); z-index: -1; pointer-events: none; opacity: 0; transition: opacity 200ms; }
+.np-stuck::before { opacity: 1; }
+.np-chip { box-shadow: 3px 3px 0 #9c4a31; transition: transform 120ms, box-shadow 120ms, background 160ms, color 160ms; }
+.np-chip:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 #9c4a31; }
+.np-chip[data-on], .np-chip:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #9c4a31; }
+.np-seg:hover:not([aria-checked="true"]) { background: #ead9c6 !important; }
+.np-search { transition: box-shadow 160ms; }
+.np-search:focus-within { box-shadow: 4px 4px 0 #d97757; }
+.np-search input::placeholder { color: #9a9086; font-weight: 500; }
+.np-chips { scrollbar-width: none; }
+.np-chips::-webkit-scrollbar { display: none; }
+.np-chip:focus-visible, .np-seg:focus-visible, .np-x:focus-visible { outline: 3px solid #d97757; outline-offset: 3px; }
+/* найденное слово в карточке */
+.np-mark { background: #ffd9a8; color: inherit; box-shadow: 0 2px 0 #d97757; padding: 0 1px; }
+/* карточка появилась после фильтра — мягко всплывает */
+@keyframes np-pop { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
+.np-brick > * { animation: np-pop 260ms cubic-bezier(.2,.8,.2,1) both; }
+/* Юнит в недоумении покачивается */
+@keyframes np-shrug { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-4deg); } 60% { transform: rotate(4deg); } }
+.np-shrug { animation: np-shrug 1.8s steps(6) infinite; }
+@media (prefers-reduced-motion: reduce) { .np-brick > *, .np-shrug { animation: none; } }

@@ -37,7 +37,7 @@ export const Masonry: React.FC<{ items: Brick[]; columns: number; gap: number }>
     if (box.current) ro.observe(box.current);
     els.current.forEach((el) => ro.observe(el));
     return () => ro.disconnect();
-  }, [items.length]);
+  }, [items.map((x) => x.key).join("|")]); // фильтр сменил набор карточек — наблюдаем новые
   useLayoutEffect(() => {
     if (!ready && width > 0 && heights.current.size === items.length) requestAnimationFrame(() => setReady(true));
   });
@@ -66,6 +66,7 @@ export const Masonry: React.FC<{ items: Brick[]; columns: number; gap: number }>
         return (
           <div
             key={it.key}
+            className="np-brick"
             data-k={it.key}
             ref={(el) => {
               if (el) els.current.set(it.key, el);

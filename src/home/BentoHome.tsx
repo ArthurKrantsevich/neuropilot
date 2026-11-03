@@ -145,6 +145,7 @@ const THEME: Record<string, Pose2["screen"]> = {
   island: "timer",
   "hamburger-eras": "think",
   "link-eras": "ask",
+  "ua-mask": "ask",
   material: "stars",
   magnetic: "love",
   tilt: "confused",

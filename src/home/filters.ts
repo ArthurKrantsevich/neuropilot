@@ -22,6 +22,7 @@ export const SORTS: { id: Sort; label: string }[] = [
 export const CARD_TAGS: Record<string, Tag[]> = {
   "hamburger-eras": ["history", "layout"],
   "link-eras": ["history"],
+  "ua-mask": ["history"],
   "rolling-like": ["motion", "forms"],
   "peek-login": ["forms", "motion"],
   reactions: ["motion"],

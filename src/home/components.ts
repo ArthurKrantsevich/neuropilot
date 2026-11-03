@@ -4,6 +4,7 @@ export const DEMO_BASE = "https://arthurkrantsevich.github.io/neuropilot/";
 export type Item = { id: string; title: string; about: string };
 export const ITEMS: Item[] = [
   { id: "hamburger-eras", title: "Гамбургер-меню старше веба", about: "Тяни ширину — меню прячется за три полоски. Одно правило @container." },
+  { id: "ua-mask", title: "Почему Chrome называет себя Mozilla", about: "Твоя строка User-Agent по именам — и ответ «Netscape» из консоли." },
   { id: "link-eras", title: "Почему ссылки синие", about: "Одна ссылка в пяти браузерах: от чёрной 1990 до #0000EE." },
   { id: "rolling-like", title: "Лайк со счётчиком-барабаном", about: "Цифры крутятся, как просмотры на YouTube. Только transform." },
   { id: "peek-login", title: "Робот не подглядывает в пароль", about: "Юнит закрывает экран ладонями на поле пароля." },

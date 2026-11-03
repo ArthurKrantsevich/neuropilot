@@ -6,6 +6,7 @@ export const RELEASES: Record<string, { at: string; video: string }> = {
   "rolling-like": { at: "2026-11-03T15:00:00Z", video: "_lVmxqEXWZg" }, // r27 · 3.11 18:00 МСК (переделан по психологии 01.11)
   "link-eras": { at: "2026-11-02T09:00:00Z", video: "dumVfOpeEfw" }, // r28 · 2.11 12:00 МСК
   "hamburger-eras": { at: "2026-11-02T15:00:00Z", video: "Hv4BGCTQzVA" }, // r29 · 2.11 18:00 МСК
+  "ua-mask": { at: "2026-11-03T15:00:00Z", video: "ze_LI9QuRjY" }, // r35 · 3.11 18:00 МСК
 };
 
 export const releaseAt = (id: string) => (RELEASES[id] ? Date.parse(RELEASES[id].at) : 0);

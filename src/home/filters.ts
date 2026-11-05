@@ -20,6 +20,7 @@ export const SORTS: { id: Sort; label: string }[] = [
 
 // новый компонент — одна строка здесь (1–2 тега)
 export const CARD_TAGS: Record<string, Tag[]> = {
+  progress: ["motion", "forms"],
   "hamburger-eras": ["history", "layout"],
   "link-eras": ["history"],
   "ua-mask": ["history"],

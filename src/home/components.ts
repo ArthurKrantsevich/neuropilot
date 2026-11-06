@@ -3,6 +3,8 @@ export const DEMO_BASE = "https://arthurkrantsevich.github.io/neuropilot/";
 
 export type Item = { id: string; title: string; about: string };
 export const ITEMS: Item[] = [
+  { id: "wait-trio", title: "Скелетон, кружок или пустой экран", about: "Три загрузки по 2,4 с — угадай, где ждать дольше." },
+  { id: "gif-video", title: "GIF: всего 256 цветов", about: "Палитра рябит на градиенте, а видео на сайте почти в 7 раз легче." },
   { id: "progress", title: "Полоска загрузки, что кажется быстрее", about: "Две полоски по 5,5 с: пауза у финиша против разгона к концу." },
   { id: "hamburger-eras", title: "Гамбургер-меню старше веба", about: "Тяни ширину — меню прячется за три полоски. Одно правило @container." },
   { id: "ua-mask", title: "Почему Chrome называет себя Mozilla", about: "Твоя строка User-Agent по именам — и ответ «Netscape» из консоли." },

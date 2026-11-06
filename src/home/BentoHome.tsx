@@ -143,6 +143,8 @@ const THEME: Record<string, Pose2["screen"]> = {
   runaway: "laugh",
   toggle: "bulb",
   island: "timer",
+  "wait-trio": "timer",
+  "gif-video": "stars",
   progress: "timer",
   "hamburger-eras": "think",
   "link-eras": "ask",

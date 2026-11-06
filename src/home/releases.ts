@@ -7,7 +7,9 @@ export const RELEASES: Record<string, { at: string; video: string }> = {
   "link-eras": { at: "2026-11-02T09:00:00Z", video: "dumVfOpeEfw" }, // r28 · 2.11 12:00 МСК
   "hamburger-eras": { at: "2026-11-02T15:00:00Z", video: "Hv4BGCTQzVA" }, // r29 · 2.11 18:00 МСК
   "ua-mask": { at: "2026-11-03T15:00:00Z", video: "ze_LI9QuRjY" }, // r35 · 3.11 18:00 МСК
-  progress: { at: "2026-11-05T09:00:00Z", video: "OzGOPh4Y6dw" }, // r34 · 5.11 12:00 МСК (id ролика вписать после загрузки)
+  progress: { at: "2026-11-05T09:00:00Z", video: "OzGOPh4Y6dw" }, // r34 · 5.11 12:00 МСК
+  "wait-trio": { at: "2026-11-06T09:00:00Z", video: "hKL8ReHtZRY" }, // r39 · 6.11 12:00 МСК
+  "gif-video": { at: "2026-11-06T15:00:00Z", video: "3lWXv5JmkQ8" }, // r40 · 6.11 18:00 МСК
 };
 
 export const releaseAt = (id: string) => (RELEASES[id] ? Date.parse(RELEASES[id].at) : 0);

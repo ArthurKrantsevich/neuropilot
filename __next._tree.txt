@@ -1,0 +1,7 @@
+:HL["/neuropilot/_next/static/chunks/3_n9-w-w_e-89.css","style"]
+:HL["/neuropilot/_next/static/media/034111bd5fecc463-s.p.0m75r3fswdwux.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/neuropilot/_next/static/media/1e634a0870b53d3f-s.p.10l581if_zng5.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/neuropilot/_next/static/media/e0d4ce99e5a5209f-s.p.1jwcpm6w583_v.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/neuropilot/_next/static/media/e93dad723b20f1c1-s.p.3psl0_mnhzy2y.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+1:[["children",{"s":"__PAGE__","h":160}]]
+0:{"b":"U_cRj-cN5lG2g_qVNlchu","t":{"t":{"s":"","h":80,"c":"$Q1"}}}

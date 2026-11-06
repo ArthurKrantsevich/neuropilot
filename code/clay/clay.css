@@ -1,0 +1,11 @@
+/* Клейморфизм: пухлые пастельные кнопки, три тени задаются inline (clayShadow). */
+.clay-btn { border: 0; padding: 0 28px; font: 800 24px/1.1 "Golos Text", "Inter", system-ui, sans-serif; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; transition: transform .12s; }
+.clay-btn:active { transform: scale(.97); }
+.clay-btn:focus-visible { outline: 3px solid #3B2A7A; outline-offset: 4px; }
+.clay-app { width: 393px; height: 852px; box-sizing: border-box; padding: 80px 26px 60px; background: #F4EEFF; display: flex; flex-direction: column; gap: 26px; font-family: "Golos Text", "Inter", system-ui, sans-serif; }
+.clay-hi { display: flex; flex-direction: column; gap: 4px; color: #2B2350; }
+.clay-hi b { font-size: 34px; letter-spacing: -0.02em; }
+.clay-hi span { font-size: 18px; color: #5D547E; }
+.clay-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.clay-icon { font-size: 44px; font-weight: 800; letter-spacing: -0.02em; }
+.clay-name { font-size: 22px; font-weight: 800; }

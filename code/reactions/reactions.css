@@ -1,0 +1,93 @@
+/* Реакции как в Telegram: тёмная тема чата, пузырь сообщения, плашки реакций, панель выбора */
+.rx {
+  --rx-bg: #0e1621;
+  --rx-bubble: #182533;
+  --rx-chip: #2b5278;
+  --rx-chip-on: #4a9ee8;
+  --rx-text: #f5f7fa;
+  --rx-dim: #8a9bb0;
+  background: var(--rx-bg);
+  border-radius: 20px;
+  padding: 28px 18px 18px;
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  font-family: system-ui, sans-serif;
+  color: var(--rx-text);
+}
+.rx-msg {
+  position: relative;
+  background: var(--rx-bubble);
+  border-radius: 18px 18px 18px 6px;
+  padding: 10px 14px 8px;
+  max-width: 300px;
+  user-select: none;
+}
+.rx .rx-msg p { margin: 4px 0 6px; line-height: 1.4; color: var(--rx-text); }
+.rx-author { color: #6ab3f3; font-size: 14px; }
+.rx-time { position: absolute; right: 12px; bottom: 6px; font-size: 12px; color: var(--rx-dim); }
+.rx-chips { display: flex; flex-wrap: wrap; gap: 6px; padding-bottom: 14px; }
+.rx-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  border-radius: 999px;
+  padding: 3px 9px;
+  background: var(--rx-chip);
+  color: var(--rx-text);
+  font-size: 15px;
+  cursor: pointer;
+}
+.rx-chip.on { background: var(--rx-chip-on); }
+.rx-n { font-variant-numeric: tabular-nums; font-size: 13px; }
+.rx-bar {
+  display: flex;
+  gap: 2px;
+  padding: 6px 8px;
+  border-radius: 999px;
+  background: #1f2c3a;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.35);
+}
+.rx-bar { transition: opacity 0.18s; }
+.rx-bar.off { opacity: 0; pointer-events: none; }
+.rx-pick {
+  border: 0;
+  background: none;
+  font-size: 26px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.rx-pick:hover { transform: scale(1.25); }
+.rx-hint { margin: 0; font-size: 13px; color: var(--rx-dim); }
+/* летящий смайлик и частицы — поверх всего, двигаются только transform/opacity */
+.rx-fly, .rx-spark { position: fixed; z-index: 9999; pointer-events: none; will-change: transform, opacity; }
+.rx-fly { font-size: 22px; }
+.rx-spark { font-size: 16px; }
+/* смайлик в плашке — отдельный блок, чтобы расти при активации */
+.rx-icon { display: inline-block; }
+/* «моя» реакция: кружок-аватар вместо счётчика, как в Telegram в личке */
+.rx-me {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d97757, #b5533a);
+  font-size: 10px;
+  font-weight: 700;
+}
+/* кольцо активации, частицы эффекта, дым и конфетти — поверх всего, только transform/opacity */
+.rx-ring, .rx-p, .rx-smoke, .rx-conf { position: fixed; z-index: 9999; pointer-events: none; will-change: transform, opacity; }
+.rx-ring { width: 34px; height: 34px; border: 2px solid; border-radius: 50%; }
+.rx-p { font-size: 22px; }
+.rx-smoke { width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle, rgb(235 235 240 / 0.85), rgb(235 235 240 / 0) 70%); }
+.rx-conf { width: 7px; height: 11px; border-radius: 2px; }
+.rx-conf.c0 { background: #ff5a5f; }
+.rx-conf.c1 { background: #ffc83d; }
+.rx-conf.c2 { background: #4ad991; }
+.rx-conf.c3 { background: #4a9ee8; }
+.rx-conf.c4 { background: #c86bfa; }

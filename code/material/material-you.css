@@ -1,0 +1,43 @@
+/* Экран красится только ролями Material (--md-*): поменялся цвет-семя — перекрасилось всё. */
+.my-screen { --t: 0.6s; container-type: inline-size; width: 100%; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; padding: 16px 18px 12px;
+  background: var(--md-surface); color: var(--md-on-surface); font-family: "Google Sans", "Roboto", "Inter", system-ui, sans-serif; transition: background var(--t), color var(--t); }
+.my-screen * { transition: background var(--t), color var(--t), border-color var(--t); }
+.my-bar { display: flex; align-items: center; gap: 14px; font-size: 20px; }
+.my-bar b { flex: 1; font-weight: 500; }
+.my-icon { font-size: 24px; color: var(--md-on-surface-variant); }
+.my-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--md-tertiary-container); border: 3px solid var(--md-tertiary); }
+.my-art { flex: 1 1 auto; min-height: 140px; border-radius: 28px; background: var(--md-primary-container) center / cover; display: grid; place-items: center; }
+.my-disc { width: 42%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, var(--md-primary-container) 0 14%, var(--md-primary) 15% 18%, var(--md-on-primary-container) 19% 100%); box-shadow: 0 10px 30px rgb(0 0 0 / 0.25); }
+.my-track { display: grid; gap: 2px; }
+.my-track b { font-size: 24px; font-weight: 600; letter-spacing: -0.01em; }
+.my-track span { font-size: 15px; color: var(--md-on-surface-variant); }
+.my-progress { height: 8px; border-radius: 4px; background: var(--md-surface-variant); overflow: hidden; }
+.my-progress i { display: block; width: 42%; height: 100%; border-radius: 4px; background: var(--md-primary); }
+.my-controls { display: flex; align-items: center; justify-content: center; gap: 34px; font-size: 26px; color: var(--md-on-surface-variant); }
+.my-fab { width: 76px; height: 76px; border-radius: 26px; display: grid; place-items: center; background: var(--md-primary); color: var(--md-on-primary); font-size: 30px; box-shadow: 0 6px 16px rgb(0 0 0 / 0.18); }
+.my-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.my-chips span { padding: 7px 14px; border-radius: 10px; border: 1px solid var(--md-outline); font-size: 14px; font-weight: 500; }
+.my-chips span.on { background: var(--md-secondary-container); color: var(--md-on-secondary-container); border-color: transparent; }
+.my-nav { display: flex; justify-content: space-around; margin: 4px -18px -12px; padding: 12px 8px 14px; background: var(--md-surface-variant); }
+.my-nav span { display: grid; justify-items: center; gap: 4px; font-size: 12px; font-weight: 500; color: var(--md-on-surface-variant); }
+.my-nav span i { width: 56px; height: 30px; border-radius: 15px; display: grid; place-items: center; }
+.my-nav span.on { color: var(--md-on-surface); }
+.my-nav span.on i { background: var(--md-secondary-container); }
+@media (prefers-reduced-motion: reduce) { .my-screen, .my-screen * { transition: none; } }
+
+/* галерея: телефон + выбор обоев + живой контраст */
+.my-demo { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; justify-content: center; }
+.my-phone { width: 300px; height: 620px; border-radius: 40px; overflow: hidden; box-shadow: 0 0 0 10px #1c1b1f, 0 30px 60px rgb(30 20 60 / 0.3); }
+.my-side { display: grid; gap: 14px; max-width: 300px; }
+.my-walls { display: flex; gap: 10px; flex-wrap: wrap; }
+.my-walls button { width: 54px; height: 54px; border-radius: 16px; border: 3px solid transparent; background-size: cover; cursor: pointer; }
+.my-walls button[aria-pressed="true"] { border-color: #1c1b1f; }
+.my-own { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+.my-own input { width: 44px; height: 44px; border: 0; padding: 0; background: none; }
+.my-swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+.my-swatches i { aspect-ratio: 1; border-radius: 6px; }
+.my-ratio { font-size: 14px; color: #555; }
+.my-ratio b { font-size: 22px; color: #1c1b1f; }
+@media (max-width: 680px) { .my-phone { width: 280px; height: 580px; } }
+/* запись: экран Android 412×915 — статус-бар 40 и жестовая полоска 24 рисует рамка, фон приложения уходит под них */
+.my-rec { width: 412px; height: 915px; box-sizing: border-box; padding: 44px 0 22px; background: var(--md-surface); transition: background 0.6s; }

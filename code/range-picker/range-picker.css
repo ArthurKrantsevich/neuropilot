@@ -1,0 +1,76 @@
+/* Выбор диапазона дат: переменные и стили компонента. */
+.picker {
+  --accent: oklch(56% 0.21 282);
+  --accent-ink: #ffffff;
+  --ink: #1b1a22;
+  --muted: #77737f;
+  --line: #ebe8f0;
+  --band: oklch(94% 0.045 285);
+  --band-preview: oklch(96.5% 0.03 285);
+  --mw: 294px;
+  --gap: 40px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* ── пикер ── */
+.picker { display: grid; grid-template-columns: 168px auto; gap: 24px; }
+.presets { display: grid; align-content: start; gap: 4px; padding-top: 40px; border-right: 1px solid var(--line); padding-right: 18px; }
+.presets button { border: 0; background: none; text-align: left; padding: 9px 12px; border-radius: 11px; font-weight: 600; font-size: 14px; color: var(--muted); transition: background 0.2s, color 0.2s; }
+.presets button:hover { background: #f4f2f8; color: var(--ink); }
+.presets button.on { background: var(--band); color: var(--accent); }
+
+.cal { display: grid; gap: 10px; }
+.cal-head { position: relative; height: 36px; display: flex; align-items: center; justify-content: center; }
+.titles { display: flex; gap: var(--gap); pointer-events: none; }
+.title-win { width: var(--mw); height: 26px; overflow: hidden; text-align: center; }
+.title-track { transition: transform 0.55s var(--ease); }
+.title-track span { display: block; height: 26px; line-height: 26px; font-weight: 700; font-size: 16px; text-transform: capitalize; letter-spacing: -0.01em; }
+.nav { position: absolute; top: 0; z-index: 2; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: #fff; display: grid; place-items: center; transition: background 0.2s, transform 0.2s var(--spring), box-shadow 0.2s; }
+.nav:hover { background: #f7f6fa; box-shadow: 0 4px 12px rgb(30 20 60 / 0.1); }
+.nav:active { transform: scale(0.9); }
+#prev { left: 0; }
+#next { right: 0; }
+.nav svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+.months-win { width: calc(2 * var(--mw) + var(--gap)); overflow: hidden; }
+.months { display: flex; gap: var(--gap); transition: transform 0.55s var(--ease); will-change: transform; }
+.month { width: var(--mw); flex-shrink: 0; }
+.wd, .week { display: grid; grid-template-columns: repeat(7, 1fr); }
+.wd span { text-align: center; font-size: 12px; font-weight: 700; color: #a9a5b3; text-transform: uppercase; padding: 6px 0 8px; }
+.cell { position: relative; height: 42px; display: grid; place-items: center; }
+.cell.empty { pointer-events: none; }
+/* полоса диапазона: сплошная через неделю, скруглена по краям строки и у дат начала/конца */
+.cell.in::before { content: ""; position: absolute; inset: 3px 0; background: var(--band); transition: background 0.25s; }
+.cell.preview::before { background: var(--band-preview); }
+.cell.in.row-l::before { left: 3px; border-radius: 18px 0 0 18px; }
+.cell.in.row-r::before { right: 3px; border-radius: 0 18px 18px 0; }
+.cell.in.row-l.row-r::before { border-radius: 18px; }
+.cell.start::before { left: 50%; border-radius: 0; }
+.cell.end::before { right: 50%; border-radius: 0; }
+.cell.start.row-r::before, .cell.end.row-l::before, .cell.start.end::before { display: none; }
+.cell button { position: relative; z-index: 1; width: 38px; height: 38px; border-radius: 50%; border: 0; background: none; font-weight: 500; font-size: 15px; font-variant-numeric: tabular-nums; transition: background 0.2s, box-shadow 0.2s, color 0.2s; }
+.cell button:hover { box-shadow: inset 0 0 0 1.5px var(--accent); }
+.cell.wkend button { color: #8d6b7a; }
+.cell.today button::after { content: ""; position: absolute; left: 50%; bottom: 5px; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: var(--accent); }
+.cell.start button, .cell.end button { background: var(--accent); color: var(--accent-ink); font-weight: 700; box-shadow: 0 6px 16px oklch(56% 0.21 282 / 0.35); }
+.cell.start button::after, .cell.end button::after { background: #fff; }
+.cell.end.preview button { background: #fff; color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); }
+.cell button i { font-style: normal; display: inline-block; }
+.cell.start button i, .cell.end:not(.preview) button i { animation: pop 0.45s var(--spring); }
+@keyframes pop { from { transform: scale(0.6); } to { transform: scale(1); } }
+
+.cal-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; border-top: 1px solid var(--line); padding-top: 14px; margin-top: 2px; }
+.summary { font-weight: 600; color: var(--ink); }
+.foot-btns { display: flex; gap: 8px; }
+.ghost, .primary { border: 0; border-radius: 12px; padding: 10px 18px; font-weight: 700; font-size: 14px; transition: transform 0.15s var(--spring), opacity 0.2s, box-shadow 0.2s; }
+.ghost { background: none; color: var(--muted); }
+.ghost:hover { background: #f4f2f8; color: var(--ink); }
+.primary { background: var(--ink); color: #fff; box-shadow: 0 6px 16px rgb(27 26 34 / 0.2); }
+.primary:disabled { opacity: 0.35; box-shadow: none; cursor: default; }
+.primary:not(:disabled):active, .ghost:active { transform: scale(0.95); }
+
+/* один месяц на узком экране */
+.picker[data-one] { grid-template-columns: minmax(0, 1fr); }
+.picker[data-one] .presets { grid-auto-flow: column; overflow-x: auto; border-right: 0; padding: 0 0 4px; }
+.picker[data-one] .presets button { white-space: nowrap; }
+.picker[data-one] .months-win { width: var(--mw); margin: 0 auto; }

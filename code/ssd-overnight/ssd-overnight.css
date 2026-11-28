@@ -1,0 +1,128 @@
+/* «Кран и цилиндр SSD» в стиле канала: крем, тёмный контур, ржавая тень, латунь и бирюзовая вода. */
+.so {
+  --ink: #14171d;
+  --cream: #f4f0ea;
+  --rust: #9c4a31;
+  --brass: #c8912f;
+  --water: #3fe0d0;
+  --night: #2a2f5c;
+  width: min(100%, 440px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  font-family: var(--golos, "Golos Text"), system-ui, sans-serif;
+  color: var(--ink);
+}
+.so p { margin: 0; }
+.so > * { min-width: 0; }
+
+.so-seg {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 4px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--rust);
+  background: var(--cream);
+}
+.so-seg-btn {
+  padding: 9px 4px;
+  font: 800 15px/1.1 var(--golos, "Golos Text"), system-ui, sans-serif;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background 120ms ease-out, color 120ms ease-out;
+}
+.so-seg-btn + .so-seg-btn { border-left: 4px solid var(--ink); }
+.so-seg-btn:hover { background: #fbf9f6; }
+.so-seg-btn[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+.so-seg-btn:focus-visible { outline: 3px solid #d97757; outline-offset: -6px; }
+
+/* сцена: ночная стена, кран, цилиндр */
+.so-stage {
+  position: relative;
+  height: 300px;
+  background: linear-gradient(180deg, var(--night), #3b3566);
+  border: 5px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--rust);
+  overflow: hidden;
+}
+.so-tap { position: absolute; left: 50%; top: 0; width: 0; height: 100%; }
+.so-tap-body {
+  position: absolute; left: -48px; top: 14px; width: 96px; height: 40px;
+  background: linear-gradient(180deg, #e6b45a, var(--brass) 55%, #8a5a1c);
+  border: 3px solid var(--ink); border-radius: 10px;
+}
+.so-tap-spout {
+  position: absolute; left: -9px; top: 50px; width: 18px; height: 30px;
+  background: linear-gradient(90deg, #8a5a1c, #f0c46c, #8a5a1c);
+  border: 3px solid var(--ink); border-top: 0; border-radius: 0 0 9px 9px;
+}
+.so-plaster, .so-clamp {
+  position: absolute; left: -34px; top: 56px; width: 68px; padding: 2px 0;
+  font: 800 12px/1 var(--golos, "Golos Text"), system-ui, sans-serif; font-style: normal; text-align: center;
+  border: 2px solid var(--ink); border-radius: 6px;
+  transition: transform 500ms cubic-bezier(.3,.7,.4,1), opacity 500ms;
+}
+.so-plaster { background: #ead7b8; color: var(--rust); }
+.so-plaster.is-off { transform: translate(18px, 190px) rotate(38deg); opacity: .85; }
+.so-clamp { background: #d8dde4; color: var(--ink); }
+.so-stream {
+  position: absolute; left: -3px; top: 80px; width: 6px; height: 120px;
+  background: linear-gradient(180deg, var(--water), rgba(63, 224, 208, .3));
+  border-radius: 3px;
+}
+.so-cyl {
+  position: absolute; left: 50%; bottom: 16px; width: 110px; height: 190px; transform: translateX(-50%);
+  border: 4px solid var(--ink); border-top-width: 2px; border-radius: 0 0 12px 12px;
+  background: rgba(255, 255, 255, .12); overflow: hidden;
+}
+.so-water {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, #8ff4ea, var(--water));
+  box-shadow: 0 0 24px rgba(63, 224, 208, .6);
+  transition: height 400ms ease-out;
+}
+.so-mark {
+  position: absolute; left: 6px; z-index: 1; transform: translateY(50%);
+  font: 800 13px/1 var(--golos, "Golos Text"), system-ui, sans-serif; color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+}
+.so-mark::after { content: ""; display: inline-block; width: 16px; height: 2px; margin-left: 4px; vertical-align: middle; background: #fff; }
+.so-cyl-label {
+  position: absolute; right: 6px; bottom: 6px; z-index: 1;
+  font: 800 13px/1 var(--golos, "Golos Text"), system-ui, sans-serif; color: var(--ink);
+}
+
+.so-range { display: grid; gap: 6px; font-size: 15px; }
+.so-range em { font-style: normal; color: #5b5f69; margin-left: 6px; }
+.so-range input { width: 100%; accent-color: var(--rust); }
+
+.so-out {
+  padding: 12px 14px; background: var(--cream);
+  border: 4px solid var(--ink); box-shadow: 5px 5px 0 var(--rust);
+  display: grid; gap: 6px;
+}
+.so-num { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.so-num b { font-size: 34px; line-height: 1; font-weight: 900; }
+.so-num span { font-size: 14px; color: #4a4e57; }
+.so-smart { font-size: 14px; font-weight: 700; }
+.so-verdict { font-size: 14px; }
+
+.so-path {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 10px 12px; text-align: left; cursor: pointer;
+  background: var(--ink); color: var(--cream);
+  border: 4px solid var(--ink); border-radius: 0; box-shadow: 5px 5px 0 var(--rust);
+  font: 700 13px/1.3 var(--golos, "Golos Text"), system-ui, sans-serif;
+}
+.so-path code { font: inherit; overflow-wrap: anywhere; }
+.so-path span { flex: none; color: #8ff4ea; }
+.so-path:focus-visible { outline: 3px solid #d97757; outline-offset: 3px; }
+
+.so-note { font-size: 14px; line-height: 1.45; }
+.so-src { font-size: 12px; color: #5b5f69; }
+
+@media (prefers-reduced-motion: reduce) {
+  .so-plaster, .so-water { transition: none; }
+}

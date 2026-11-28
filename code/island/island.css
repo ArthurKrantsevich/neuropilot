@@ -1,0 +1,85 @@
+/* Dynamic Island. Весь морфинг — три свойства на одной пружине. */
+:root {
+  /* пружина без JS: кривая затухающих колебаний, разложенная по точкам */
+  --spring: linear(0, 0.067, 0.225, 0.417, 0.606, 0.771, 0.9, 0.99, 1.047, 1.076, 1.084, 1.078, 1.065, 1.049, 1.033, 1.019, 1.008, 1.001, 0.996, 0.994, 0.993, 0.993, 0.995, 0.996, 1);
+}
+.island {
+  width: var(--w);
+  height: var(--h);
+  border-radius: var(--r);
+  background: #000;
+  color: #fff;
+  overflow: hidden;
+  transition: width 0.6s var(--spring), height 0.6s var(--spring), border-radius 0.6s var(--spring);
+  font: 600 15px/1.2 -apple-system, "SF Pro Text", "Inter", system-ui, sans-serif;
+  cursor: pointer;
+}
+/* содержимое догоняет форму: появляется из размытия чуть позже */
+.island-in { height: 100%; animation: isl-in 0.4s 0.18s both; }
+@keyframes isl-in { from { opacity: 0; filter: blur(8px); scale: 0.92; } }
+
+.isl-row { display: flex; align-items: center; gap: 12px; }
+.isl-compact { height: 100%; justify-content: space-between; padding: 0 16px 0 12px; }
+.isl-dot { font-size: 17px; }
+.timer-ic { color: #ff9f0a; }
+.isl-num { color: #ff9f0a; font-size: 17px; font-variant-numeric: tabular-nums; }
+
+.isl-music { padding: 18px 20px 14px; display: grid; gap: 12px; }
+.isl-art { width: 52px; height: 52px; border-radius: 12px; flex: none; background: conic-gradient(from 200deg, #ff2d55, #af52de, #5856d6, #ff9f0a, #ff2d55); }
+.isl-meta { display: grid; gap: 2px; min-width: 0; flex: 1; }
+.isl-meta b { font-size: 17px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.isl-meta span { color: rgb(255 255 255 / 0.55); font-size: 14px; }
+.isl-eq { display: flex; gap: 3px; align-items: center; height: 24px; }
+.isl-eq i { width: 4px; height: 100%; border-radius: 2px; background: #ff375f; animation: eq 0.9s ease-in-out infinite alternate; }
+@keyframes eq { from { transform: scaleY(0.25); } to { transform: scaleY(1); } }
+.isl-bar { height: 5px; border-radius: 3px; background: rgb(255 255 255 / 0.2); }
+.isl-bar i { display: block; width: 38%; height: 100%; border-radius: inherit; background: #fff; }
+.isl-ctrl { display: flex; justify-content: center; gap: 46px; font-size: 22px; }
+.isl-ctrl .big { font-size: 28px; }
+
+.isl-call { height: 100%; padding: 0 12px; }
+.isl-ava { width: 52px; height: 52px; border-radius: 50%; flex: none; display: grid; place-items: center; background: linear-gradient(135deg, #64d2ff, #5e5ce6); font-size: 22px; font-weight: 700; }
+.isl-btn { width: 50px; height: 50px; border-radius: 50%; flex: none; display: grid; place-items: center; font-size: 22px; }
+.isl-btn.no { background: #ff3b30; }
+.isl-btn.yes { background: #30d158; }
+
+@media (prefers-reduced-motion: reduce) {
+  .island { transition-duration: 0.01s; }
+  .island-in { animation: none; }
+}
+
+/* ── экран iPhone 15 Pro: 393×852 pt ── */
+.iphone {
+  position: relative;
+  width: 393px;
+  height: 852px;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(120% 60% at 20% 10%, #ff7a59 0%, transparent 55%),
+    radial-gradient(110% 70% at 90% 40%, #7b5cff 0%, transparent 60%),
+    radial-gradient(120% 70% at 30% 100%, #00b3a4 0%, transparent 60%),
+    #1b1530;
+  font-family: -apple-system, "SF Pro Display", "Inter", system-ui, sans-serif;
+}
+/* строка статуса: время слева, значки справа — по бокам от острова */
+.ip-status { position: absolute; inset: 0 0 auto; height: 54px; display: flex; justify-content: space-between; align-items: center; padding: 6px 30px 0 36px; transition: opacity 0.25s; font-weight: 600; font-size: 17px; }
+.ip-icons { display: flex; gap: 7px; align-items: center; }
+/* остров — ровно на месте камеры: 11 pt сверху, по центру */
+.ip-island { position: absolute; top: 11px; left: 0; right: 0; display: flex; justify-content: center; z-index: 2; }
+/* безопасная зона: ниже строки статуса и выше полоски «домой» */
+.ip-safe { position: absolute; inset: 59px 0 34px; padding: 0 24px; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+.ip-safe h3 { margin: 0; font-size: 40px; line-height: 1.02; letter-spacing: -0.02em; }
+.ip-safe p { margin: 0 0 14px; font-size: 17px; line-height: 1.35; color: rgb(255 255 255 / 0.78); }
+.ip-btns { display: grid; gap: 12px; }
+.ip-btns button { border: 0; border-radius: 20px; padding: 18px 20px; font-family: inherit; font-weight: 600; font-size: 19px; line-height: 1; text-align: left; color: #fff; background: rgb(255 255 255 / 0.16); backdrop-filter: blur(20px); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.22); transition: background 0.2s, transform 0.2s; }
+.ip-btns button[aria-pressed="true"] { background: #fff; color: #111; }
+.ip-btns button:active { transform: scale(0.97); }
+.ip-safe small { margin-top: 6px; font-size: 14px; color: rgb(255 255 255 / 0.6); }
+.ip-home { position: absolute; bottom: 8px; left: 50%; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; background: #fff; }
+
+/* в галерее телефон уменьшен и в рамке */
+.iphone-frame { padding: 12px; border-radius: 62px; background: #111; box-shadow: 0 30px 60px rgb(30 20 60 / 0.25), inset 0 0 0 2px #333; }
+.iphone-frame .iphone { border-radius: 50px; }
+/* раскрытый остров закрывает строку статуса — как в iOS */
+.iphone[data-mode="music"] .ip-status, .iphone[data-mode="call"] .ip-status { opacity: 0; }

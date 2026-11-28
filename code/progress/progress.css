@@ -1,0 +1,94 @@
+/* «Честная полоска» в стиле канала: кремовый фон, тёмный контур 5 px, жёсткая ржавая тень без размытия, оранжевая заливка.
+   Двигаются только transform заливки и background-position полос. */
+.hp {
+  --hp-ink: #14171d;
+  --hp-cream: #f4f0ea;
+  --hp-rust: #9c4a31;
+  --hp-fill: #d97757;
+  --hp-rib: rgba(180, 83, 47, 0.6);
+  box-sizing: border-box;
+  background: var(--hp-cream);
+  border: 5px solid var(--hp-ink);
+  box-shadow: 8px 8px 0 var(--hp-rust);
+  padding: 5px;
+}
+.hp-h { width: 100%; height: 40px; }
+.hp-v { width: 88px; height: 230px; }
+.hp-well { width: 100%; height: 100%; overflow: hidden; }
+.hp-fill { width: 100%; height: 100%; background-color: var(--hp-fill); will-change: transform; }
+.hp-h .hp-fill { transform: translateX(calc((var(--p) - 1) * 100%)); }
+.hp-v .hp-fill { transform: translateY(calc((1 - var(--p)) * 100%)); }
+
+/* полосы-рёбра: косая плитка без швов (стыки в углах), бегут против заливки — CHI 2010 */
+.hp-ribs .hp-fill {
+  background-image: linear-gradient(to top right, var(--hp-rib) 0 20%, transparent 20% 50%, var(--hp-rib) 50% 70%, transparent 70%);
+  background-size: 64px 38px;
+}
+.hp-ribs.hp-v .hp-fill { animation: hp-down 1.15s linear infinite; }
+.hp-ribs.hp-h .hp-fill { animation: hp-left 1.9s linear infinite; }
+@keyframes hp-down { to { background-position: 0 38px; } }
+@keyframes hp-left { to { background-position: -64px 0; } }
+
+/* ---------- гонка из шортса ---------- */
+.pr {
+  container-type: inline-size;
+  width: min(100%, 420px);
+  display: grid;
+  gap: 14px;
+  font-family: var(--golos, "Golos Text"), system-ui, sans-serif;
+  color: #14171d;
+}
+.pr p { margin: 0; }
+/* общий таймер — плашка-полоска сверху, как в ролике */
+.pr-clock { position: relative; height: 48px; background: #f4f0ea; border: 5px solid #14171d; box-shadow: 6px 6px 0 #9c4a31; overflow: hidden; }
+.pr-clock-fill { position: absolute; inset: 4px; background: #d97757; transform-origin: left; will-change: transform; }
+.pr-clock span { position: relative; display: block; padding: 0 14px; line-height: 38px; font-weight: 800; font-size: 20px; font-variant-numeric: tabular-nums; }
+.pr .pr-q { font-weight: 800; font-size: 20px; line-height: 1.25; min-height: 2.5em; }
+.pr-race { display: flex; justify-content: space-around; gap: 16px; padding: 4px 8px 0 0; }
+.pr-col { display: grid; justify-items: center; gap: 2px; min-width: 0; text-align: center; }
+.pr-bar { margin-bottom: 14px; }
+.pr-win .hp { border-color: #24894d; }
+.pr-pct { font-weight: 800; font-size: 34px; line-height: 1; font-variant-numeric: tabular-nums; }
+.pr-name { font-weight: 800; font-size: 15px; margin-top: 6px; }
+.pr-sub { font-weight: 500; font-size: 13px; color: #6b6258; }
+
+.pr-ctl { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 4px; }
+.pr-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  font: 800 15px/1.1 var(--golos, "Golos Text"), system-ui, sans-serif;
+  color: #14171d;
+  background: #f4f0ea;
+  border: 4px solid #14171d;
+  border-radius: 0;
+  box-shadow: 5px 5px 0 #9c4a31;
+  cursor: pointer;
+  transition: transform 80ms ease-out, box-shadow 80ms ease-out;
+}
+.pr-btn:hover { background: #fbf9f6; }
+/* нажатие — кнопка садится в свою тень */
+.pr-btn:active { transform: translate(5px, 5px); box-shadow: 0 0 0 #9c4a31; }
+.pr-btn:focus-visible { outline: 3px solid #d97757; outline-offset: 3px; }
+.pr-tog i { width: 16px; height: 16px; border: 3px solid #14171d; background: #f4f0ea; box-sizing: border-box; }
+.pr-tog[aria-pressed="true"] { background: #d97757; }
+.pr-tog[aria-pressed="true"] i { background: #14171d; }
+.pr .pr-note { font-size: 13px; line-height: 1.45; color: #4b4540; }
+
+/* узко — полоски лёжа, одна под другой */
+@container (max-width: 270px) {
+  .pr-race { flex-direction: column; padding: 0 8px 0 0; }
+  .pr-col { grid-template-columns: 1fr auto; justify-items: start; text-align: left; column-gap: 10px; }
+  .pr-col .hp-v { grid-column: 1 / -1; width: 100%; height: 40px; }
+  .pr-col .hp-v .hp-fill { transform: translateX(calc((var(--p) - 1) * 100%)); }
+  .pr-col .hp-ribs.hp-v .hp-fill { animation-name: hp-left; animation-duration: 1.9s; }
+  .pr-pct { grid-row: 2; grid-column: 2; font-size: 26px; }
+  .pr-name { grid-row: 2; grid-column: 1; margin-top: 0; }
+  .pr-sub { grid-column: 1 / -1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-ribs .hp-fill { animation: none !important; }
+  .pr-btn { transition: none; }
+}

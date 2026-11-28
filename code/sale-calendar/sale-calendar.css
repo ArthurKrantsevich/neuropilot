@@ -1,0 +1,48 @@
+/* «Календарь распродаж» в стиле канала: крем, тёмный контур, жёсткая ржавая тень. */
+.sc {
+  --ink: #14171d;
+  --cream: #f4f0ea;
+  --rust: #9c4a31;
+  --green: #2f7d4f;
+  --red: #c4382a;
+  width: min(100%, 440px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  font-family: var(--golos, "Golos Text"), system-ui, sans-serif;
+  color: var(--ink);
+}
+.sc p { margin: 0; }
+.sc > * { min-width: 0; }
+.sc-card { display: grid; gap: 8px; padding: 14px; background: var(--cream); border: 5px solid var(--ink); box-shadow: 6px 6px 0 var(--rust); }
+.sc-title { font-weight: 800; font-size: 15px; }
+.sc-big { font-size: clamp(34px, 11vw, 48px); font-weight: 900; line-height: 1.05; overflow-wrap: anywhere; }
+.sc-when { font-size: 13px; color: #4a4e57; line-height: 1.4; }
+
+.sc-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.sc-ev { display: grid; gap: 2px; padding: 8px 10px; background: #fff; border: 3px solid var(--ink); font-size: 14px; }
+.sc-ev span { color: #4a4e57; }
+.sc-ev em { font-style: normal; font-size: 13px; }
+.sc-today { padding: 4px 10px; background: var(--ink); color: var(--cream); font-weight: 800; font-size: 13px; }
+
+.sc-rule { font-size: 14px; line-height: 1.45; }
+.sc-switch {
+  display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 10px; text-align: left;
+  font: 800 14px/1.2 var(--golos, "Golos Text"), system-ui, sans-serif; color: var(--ink);
+  background: #fff; border: 4px solid var(--ink); border-radius: 0; cursor: pointer;
+}
+.sc-switch:focus-visible { outline: 3px solid #d97757; outline-offset: 3px; }
+.sc-knob { flex: none; width: 34px; height: 18px; background: var(--cream); border: 3px solid var(--ink); position: relative; }
+.sc-knob::after { content: ""; position: absolute; top: 1px; left: 1px; width: 10px; height: 10px; background: var(--ink); transition: transform 150ms; }
+.sc-switch[aria-checked="true"] .sc-knob { background: var(--green); }
+.sc-switch[aria-checked="true"] .sc-knob::after { transform: translateX(16px); background: var(--cream); }
+.sc-gap { font-size: 13px; color: #4a4e57; }
+.sc-verdict { font-weight: 900; font-size: 16px; line-height: 1.3; padding: 8px 10px; border: 4px solid var(--ink); background: #fff; }
+.sc-verdict.is-ok { color: var(--green); }
+.sc-verdict.is-no { color: var(--red); }
+
+.sc-quote { margin: 0; padding: 10px 12px; border: 4px solid var(--ink); background: #fff; display: grid; gap: 4px; font-size: 15px; font-weight: 800; line-height: 1.4; }
+.sc-quote cite { font-style: normal; font-weight: 600; font-size: 12px; color: #5b5f69; }
+.sc-src { font-size: 12px; color: #5b5f69; }
+
+@media (prefers-reduced-motion: reduce) { .sc-knob::after { transition: none; } }

@@ -1,0 +1,39 @@
+/* Кнопка лайка со счётчиком-барабаном. Двигаются только transform (столбики цифр, палец). */
+.rl {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 26px 14px 20px;
+  font-family: inherit;
+  font-size: 34px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #14171d;
+  background: #f4f0ea;
+  border: 3px solid #14171d;
+  box-shadow: 6px 6px 0 #b85c3e;
+  cursor: pointer;
+  transition: transform 90ms ease-out;
+}
+.rl:active { transform: translate(3px, 3px) scale(0.97); }
+.rl-thumb { width: 1.1em; height: 1.1em; fill: none; stroke: #14171d; stroke-width: 2; stroke-linejoin: round; }
+.rl.on .rl-thumb { fill: #d2693f; stroke: #14171d; }
+/* палец подпрыгивает с наклоном */
+.rl-thumb.pop { animation: rl-pop 420ms cubic-bezier(0.3, 1.6, 0.5, 1); transform-origin: 30% 80%; }
+@keyframes rl-pop {
+  0% { transform: scale(1) rotate(0); }
+  40% { transform: scale(1.35) rotate(-14deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+.rl-num { display: inline-flex; }
+.rl-gap { margin-left: 0.25em; } /* пробел между тысячами */
+/* окошко барабана: одна строка 1,2em, остальное спрятано */
+.rl-drum { display: inline-block; height: 1.2em; overflow: hidden; vertical-align: top; }
+.rl-col { display: flex; flex-direction: column; will-change: transform; }
+.rl-col i { font-style: normal; height: 1.2em; line-height: 1.2em; text-align: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rl-col { transition: none !important; }
+  .rl-thumb.pop { animation: none; }
+}

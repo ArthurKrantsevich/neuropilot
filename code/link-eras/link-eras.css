@@ -1,0 +1,43 @@
+/* Одна ссылка в пяти эпохах. Цвета «сегодня» — стандарт HTML (WHATWG): :link #0000EE, :visited #551A8B */
+.le { display: grid; gap: 14px; width: min(100%, 380px); font-family: system-ui, sans-serif; }
+.le-years { display: flex; gap: 6px; flex-wrap: wrap; }
+.le-years button {
+  flex: 1; min-width: 56px; padding: 8px 0; border: 2px solid #14171d; border-radius: 8px;
+  background: #f4f0ea; color: #14171d; font: 700 14px/1 system-ui, sans-serif; cursor: pointer;
+}
+.le-years button.on { background: #14171d; color: #f4f0ea; }
+.le-win { border: 2px solid #14171d; border-radius: 6px; overflow: hidden; transition: background-color 0.3s; }
+.le-bar { padding: 6px 10px; font: 700 12px/1.2 system-ui, sans-serif; text-align: center; }
+.le-page { padding: 18px 20px 22px; min-height: 120px; }
+.le-page h3 { margin: 0 0 10px; font-size: 22px; font-family: inherit; }
+.le .le-win .le-page p { margin: 0; color: inherit; font-size: 17px; line-height: 1.5; }
+.le .le-win .le-page h3 { color: inherit; }
+.le-page a { text-underline-offset: 3px; }
+.le-note { margin: 0; font-size: 14px; line-height: 1.45; opacity: 0.8; }
+.le-reset { justify-self: start; padding: 6px 12px; border: 1px solid currentColor; border-radius: 6px; background: none; color: inherit; cursor: pointer; }
+
+/* 1990 — WorldWideWeb на NeXT: чёрно-белый, ссылка — просто подчёркнутый текст */
+.le-1990 { background: #fff; color: #000; font-family: "Times New Roman", Times, serif; }
+.le-1990 .le-bar { background: #000; color: #fff; }
+.le-1990 a, .le-1990 a.le-visited { color: #000; text-decoration: underline; }
+
+/* 1993 — Mosaic 0.13: серый фон; синяя со сплошным подчёркиванием, посещённая — тёмно-фиолетовая с пунктиром */
+.le-1993 { background: #bfbfbf; color: #000; font-family: "Times New Roman", Times, serif; }
+.le-1993 .le-bar { background: #7f7f7f; color: #fff; }
+.le-1993 a { color: #0000ee; text-decoration: underline solid; }
+.le-1993 a.le-visited { color: #551a8b; text-decoration: underline dashed; }
+
+/* 1994 — Netscape и 1995 — Internet Explorer повторили Mosaic: синие ссылки на сером */
+.le-1994, .le-1995 { background: #c0c0c0; color: #000; font-family: "Times New Roman", Times, serif; }
+.le-1994 .le-bar { background: #3a3a8c; color: #fff; }
+.le-1995 .le-bar { background: #000080; color: #fff; }
+.le-1994 a, .le-1995 a { color: #0000ee; text-decoration: underline; }
+.le-1994 a.le-visited, .le-1995 a.le-visited { color: #551a8b; }
+
+/* сегодня — значения по умолчанию из стандарта HTML */
+.le-today { background: #fff; color: #14171d; }
+.le-today .le-bar { background: #e8e6e3; color: #14171d; }
+.le-today a { color: #0000ee; text-decoration: underline; }
+.le-today a.le-visited { color: #551a8b; }
+
+@media (prefers-reduced-motion: reduce) { .le-win { transition: none; } }

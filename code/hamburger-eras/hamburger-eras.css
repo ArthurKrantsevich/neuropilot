@@ -1,0 +1,36 @@
+/* Гамбургер-меню: узкий контейнер — три полоски, широкий — меню целиком. Правило в одном месте — @container */
+.hb { display: grid; gap: 14px; width: 100%; max-width: 840px; font-family: system-ui, sans-serif; }
+.hb-range { display: grid; gap: 6px; font-size: 14px; }
+.hb-range input { width: 100%; }
+.hb-stage { overflow: hidden; padding: 4px 0; }
+.hb-page {
+  container-type: inline-size; position: relative; margin: 0 auto; max-width: 100%;
+  border: 2px solid #14171d; border-radius: 10px; background: #fff; color: #14171d; overflow: hidden; min-height: 270px;
+  transition: width 0.2s;
+}
+.hb-head { display: flex; align-items: center; gap: 18px; padding: 12px 16px; background: #edebe7; }
+.hb-burger { display: none; width: 34px; height: 30px; padding: 5px; border: 0; background: none; cursor: pointer; }
+.hb-burger i { display: block; height: 3px; margin: 4px 0; border-radius: 2px; background: #14171d; }
+.hb-nav { display: flex; gap: 18px; }
+.hb-nav a, .hb-drawer a { color: #0000ee; font-weight: 600; text-decoration: none; }
+.hb-drawer {
+  position: absolute; inset: 54px auto 0 0; width: 70%; display: grid; align-content: start; gap: 14px;
+  padding: 18px; background: #14171d;
+}
+.hb-drawer a { color: #f4f0ea; font-size: 18px; }
+.hb-drawer button { justify-self: start; border: 1px solid #f4f0ea; border-radius: 6px; background: none; color: #f4f0ea; padding: 4px 10px; cursor: pointer; }
+.hb-lines { display: grid; gap: 12px; padding: 20px 16px 26px; }
+.hb-lines span { height: 10px; border-radius: 5px; background: #d5d1ca; }
+.hb-lines span:nth-child(2) { width: 80%; }
+.hb-lines span:nth-child(4) { width: 60%; }
+
+@container (max-width: 599px) {
+  .hb-burger { display: block; }
+  .hb-nav { display: none; }
+}
+@container (min-width: 600px) {
+  .hb-drawer { display: none; }
+}
+
+.hb-facts { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 14px; line-height: 1.45; }
+@media (prefers-reduced-motion: reduce) { .hb-page { transition: none; } }

@@ -1,0 +1,59 @@
+/* «GIF против видео» в стиле канала: крем, тёмный контур, ржавая тень. */
+.gv {
+  width: min(100%, 440px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* canvas 360 px не распирает карточку на узком экране */
+  gap: 14px;
+  font-family: var(--golos, "Golos Text"), system-ui, sans-serif;
+  color: #14171d;
+}
+.gv p, .gv figure { margin: 0; }
+.gv > * { min-width: 0; }
+.gv-strip { display: grid; gap: 6px; }
+.gv-strip canvas {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border: 5px solid #14171d;
+  box-shadow: 6px 6px 0 #9c4a31;
+  box-sizing: border-box;
+}
+.gv-strip figcaption { font-weight: 800; font-size: 14px; }
+.gv-range { display: grid; gap: 6px; font-weight: 700; font-size: 14px; }
+.gv-range input { width: 100%; accent-color: #d97757; }
+.gv-weight { display: grid; gap: 6px; }
+.gv-weight b, .gv-code b { font-weight: 800; font-size: 15px; }
+.gv-row { display: grid; grid-template-columns: 52px 1fr 64px; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; }
+.gv-row i { display: block; height: 18px; border: 3px solid #14171d; transform-origin: left; box-sizing: border-box; }
+.gv-row em { font-style: normal; font-variant-numeric: tabular-nums; text-align: right; }
+.gv-gif { background: #9c4a31; }
+.gv-mp4 { background: #3dbe6e; }
+.gv-webm { background: #2bb3a3; }
+.gv-code { display: grid; gap: 8px; justify-items: start; }
+.gv-code code {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  background: #14171d;
+  color: #5bff6a;
+  font: 700 13px/1.4 ui-monospace, "JetBrains Mono", monospace;
+  overflow-wrap: anywhere;
+}
+.gv-btn {
+  padding: 9px 14px;
+  font: 800 15px/1.1 var(--golos, "Golos Text"), system-ui, sans-serif;
+  color: #14171d;
+  background: #f4f0ea;
+  border: 4px solid #14171d;
+  border-radius: 0;
+  box-shadow: 5px 5px 0 #9c4a31;
+  cursor: pointer;
+  transition: transform 80ms ease-out, box-shadow 80ms ease-out;
+}
+.gv-btn:hover { background: #fbf9f6; }
+.gv-btn:active { transform: translate(5px, 5px); box-shadow: 0 0 0 #9c4a31; }
+.gv-btn:focus-visible { outline: 3px solid #d97757; outline-offset: 3px; }
+.gv .gv-note { font-size: 13px; line-height: 1.45; color: #4b4540; }
+@media (prefers-reduced-motion: reduce) { .gv-btn { transition: none; } }

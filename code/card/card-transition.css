@@ -1,0 +1,58 @@
+/* Карточка → страница. Сам перелёт делает браузер; здесь только его скорость и кривая. */
+::view-transition-group(*) {
+  animation-duration: 0.55s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+/* старый и новый снимок картинки не просвечивают друг через друга — картинка «растягивается», а не мигает */
+::view-transition-old(*),
+::view-transition-new(*) {
+  height: 100%;
+  object-fit: cover;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
+
+/* адаптив по ширине контейнера, а не окна: компонент одинаково живёт в телефоне, колонке и во весь экран */
+.ct { container-type: inline-size; width: 100%; max-width: 1280px; margin: 0 auto; box-sizing: border-box; }
+.ct-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 16px; }
+@container (min-width: 640px) { .ct-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; padding: 24px; } }
+@container (min-width: 960px) { .ct-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; padding: 32px; } }
+.ct-card { border: 0; padding: 0 0 14px; border-radius: 22px; background: #fff; text-align: left; display: grid; gap: 4px; box-shadow: 0 6px 20px rgb(30 20 60 / 0.1); overflow: hidden; font: inherit; color: #16151c; cursor: pointer; transition: transform 0.15s; }
+.ct-card:active { transform: scale(0.97); }
+.ct-card b { padding: 6px 14px 0; font-size: 19px; width: fit-content; }
+.ct-card span { padding: 0 14px; font-size: 13px; color: #7a7684; }
+.ct-art { aspect-ratio: 1 / 1.05; overflow: hidden; border-radius: 22px 22px 0 0; }
+.ct-art svg { width: 100%; height: 100%; display: block; }
+.ct-art.big { aspect-ratio: auto; height: clamp(260px, 95cqw, 380px); border-radius: 0 0 32px 32px; }
+/* широкий экран: страница места — картинка слева, текст справа */
+@container (min-width: 760px) {
+  .ct-page { display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: start; padding: 32px; }
+  .ct-body { align-self: center; }
+  .ct-art.big { height: auto; aspect-ratio: 4 / 3; border-radius: 28px; }
+  .ct-body h2 { font-size: 52px; }
+  .ct-body p { font-size: 18px; }
+  .ct-back { top: 48px; left: 48px; }
+}
+
+.ct-page { position: relative; min-height: 100%; background: #fff; color: #16151c; }
+.ct-back { position: absolute; top: 14px; left: 14px; z-index: 2; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgb(255 255 255 / 0.85); backdrop-filter: blur(10px); font-size: 22px; cursor: pointer; }
+.ct-body { padding: 18px 22px 24px; display: grid; gap: 8px; }
+.ct-body h2 { margin: 0; font-size: 40px; letter-spacing: -0.02em; width: fit-content; }
+.ct-body p { margin: 0; font-size: 16px; line-height: 1.45; color: #4b4855; }
+.ct-body .ct-sub { color: #7a7684; font-size: 14px; }
+.ct-row { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+.ct-chip { padding: 8px 14px; border-radius: 999px; background: #f1eff6; font-weight: 600; font-size: 14px; }
+.ct-book { border: 0; border-radius: 16px; padding: 14px 22px; background: #16151c; color: #fff; font-family: inherit; font-weight: 600; font-size: 16px; line-height: 1; cursor: pointer; }
+
+/* экран телефона для записи и галереи: 393×759 — безопасная зона iPhone 15 Pro */
+.ct-phone { width: 393px; height: 759px; overflow: auto; background: #f4f2f8; font-family: -apple-system, "SF Pro Text", "Inter", system-ui, sans-serif; }
+.ct-h1 { overflow-wrap: anywhere; margin: 0; padding: 20px 16px 0; font-size: 32px; letter-spacing: -0.02em; color: #16151c; }
+@container (min-width: 640px) { .ct-h1 { padding: 28px 24px 0; font-size: 38px; } }
+@container (min-width: 960px) { .ct-h1 { padding: 36px 32px 0; font-size: 44px; } }
+
+/* запись во весь экран iPhone (393×852): фон приложения уходит под строку статуса и полоску «домой», контент — в безопасной зоне */
+.ct-phone.full { height: 852px; padding: 59px 0 34px; box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden; }
+.ct-phone.full > .ct { flex: 1; display: flex; flex-direction: column; }
+.ct-phone.full .ct-page { flex: 1; }
+.ct-phone.full:has(.ct-page) { background: #fff; }

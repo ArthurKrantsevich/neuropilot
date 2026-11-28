@@ -1,0 +1,47 @@
+/* «Большие и малые ядра» в стиле канала: крем, тёмный контур, жёсткая ржавая тень. */
+.bc {
+  --ink: #14171d;
+  --cream: #f4f0ea;
+  --rust: #9c4a31;
+  --orange: #e8742f;
+  --teal: #2aa6a0;
+  width: min(100%, 440px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  font-family: var(--golos, "Golos Text"), system-ui, sans-serif;
+  color: var(--ink);
+}
+.bc p { margin: 0; }
+.bc > * { min-width: 0; }
+.bc-card { display: grid; gap: 8px; padding: 14px; background: var(--cream); border: 5px solid var(--ink); box-shadow: 6px 6px 0 var(--rust); min-width: 0; }
+.bc-label, .bc-row-title { font-weight: 800; font-size: 15px; }
+.bc-gap { margin-top: 6px; }
+.bc-sel, .bc-manual input {
+  width: 100%; min-width: 0; padding: 10px 12px;
+  font: 700 16px/1.2 var(--golos, "Golos Text"), system-ui, sans-serif; color: var(--ink);
+  background: #fff; border: 4px solid var(--ink); border-radius: 0;
+}
+.bc-sel:focus-visible, .bc-manual input:focus-visible { outline: 3px solid #d97757; outline-offset: 2px; }
+.bc-manual { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.bc-manual label { display: grid; gap: 4px; font-size: 13px; font-weight: 700; min-width: 0; }
+
+.bc-cores { display: flex; flex-wrap: wrap; gap: 5px; align-items: flex-end; }
+.bc-big, .bc-small { display: inline-block; border: 3px solid var(--ink); flex: none; }
+.bc-big { width: 24px; height: 24px; background: var(--orange); }
+.bc-small { width: 13px; height: 13px; background: var(--teal); border-width: 2px; }
+.bc-sum { font-weight: 800; font-size: 15px; line-height: 1.3; }
+.bc-hint { font-size: 13px; color: #4a4e57; }
+
+.bc-track { height: 18px; background: #fff; border: 4px solid var(--ink); }
+.bc-fill { height: 100%; transition: width 250ms; }
+.bc-you { background: var(--orange); }
+.bc-leak { background: var(--rust); }
+.bc-reg { background: var(--teal); }
+
+.bc-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0; padding: 0; list-style: none; font-size: 14px; }
+.bc-legend li { display: flex; align-items: center; gap: 6px; }
+.bc-moral { font-size: 15px; font-weight: 800; line-height: 1.4; padding: 10px 12px; border: 4px solid var(--ink); background: #fff; }
+.bc-src { font-size: 12px; color: #5b5f69; line-height: 1.4; }
+
+@media (prefers-reduced-motion: reduce) { .bc-fill { transition: none; } }

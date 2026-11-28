@@ -1,0 +1,125 @@
+{
+ "tab-memory": [
+  "TabMemory.tsx",
+  "tab-memory.css"
+ ],
+ "battery-os": [
+  "BatteryOs.tsx",
+  "battery-os.css"
+ ],
+ "big-cores": [
+  "BigCores.tsx",
+  "big-cores.css"
+ ],
+ "sale-calendar": [
+  "SaleCalendar.tsx",
+  "sale-calendar.css"
+ ],
+ "hz-blur": [
+  "HzBlur.tsx",
+  "hz-blur.css"
+ ],
+ "password-dictionary": [
+  "PasswordDictionary.tsx",
+  "password-dictionary.css"
+ ],
+ "ssd-overnight": [
+  "SsdOvernight.tsx",
+  "ssd-overnight.css"
+ ],
+ "refusal-stamp": [
+  "RefusalStamp.tsx",
+  "refusal-stamp.css"
+ ],
+ "wait-trio": [
+  "WaitTrio.tsx",
+  "wait.css"
+ ],
+ "gif-video": [
+  "GifVsVideo.tsx",
+  "gif-video.css"
+ ],
+ "progress": [
+  "HonestProgress.tsx",
+  "ProgressRace.tsx",
+  "progress.css"
+ ],
+ "hamburger-eras": [
+  "HamburgerEras.tsx",
+  "hamburger-eras.css"
+ ],
+ "ua-mask": [
+  "UaMask.tsx",
+  "ua-mask.css"
+ ],
+ "link-eras": [
+  "LinkEras.tsx",
+  "link-eras.css"
+ ],
+ "rolling-like": [
+  "RollingLike.tsx",
+  "rolling-like.css"
+ ],
+ "peek-login": [
+  "PeekLogin.tsx",
+  "peek-login.css"
+ ],
+ "reactions": [
+  "Reactions.tsx",
+  "reactions.css"
+ ],
+ "eras": [
+  "Eras.tsx"
+ ],
+ "clay": [
+  "Clay.tsx",
+  "clay.css"
+ ],
+ "brutal": [
+  "Brutal.tsx",
+  "brutal.css"
+ ],
+ "neu": [
+  "Neu.tsx",
+  "neu.css"
+ ],
+ "bento": [
+  "Bento.tsx",
+  "bento.css",
+  "bento.ts"
+ ],
+ "material": [
+  "MaterialYou.tsx",
+  "material-you.css",
+  "wallpapers.ts"
+ ],
+ "card": [
+  "CardTransition.tsx",
+  "card-transition.css"
+ ],
+ "island": [
+  "DynamicIsland.tsx",
+  "IslandPhone.tsx",
+  "island.css"
+ ],
+ "range-picker": [
+  "RangePicker.tsx",
+  "dates.ts",
+  "range-picker.css"
+ ],
+ "magnetic": [
+  "MagneticButton.tsx"
+ ],
+ "tilt": [
+  "TiltCard.tsx"
+ ],
+ "password": [
+  "PasswordFace.tsx"
+ ],
+ "toggle": [
+  "ThemeToggle.tsx"
+ ],
+ "runaway": [
+  "RunawayButton.tsx"
+ ]
+}
